@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:meal_management/screens/home_screen.dart';
-import 'package:meal_management/screens/login_screen.dart'; // Import the FirebaseDatabase package
+import 'package:meal_management/screens/authentication/login_screen.dart';
+import 'package:meal_management/screens/home/home_screen.dart';
 
 class LandingScreen extends StatefulWidget {
   const LandingScreen({super.key});
@@ -52,12 +52,9 @@ class _LandingScreenState extends State<LandingScreen> {
               return const HomeScreen();
             } else {
               return const LoginScreen();
-              //return const LoginScreen();
             }
           } else {
-            // Handle the case when an error occurs or snapshot.data is null
             return const LoginScreen();
-            //return const LoginScreen();
           }
         },
       ),
@@ -68,7 +65,6 @@ class _LandingScreenState extends State<LandingScreen> {
 Future<DataSnapshot?> getUserDeviceToken(String userId) async {
   DataSnapshot? snapshot;
   try {
-    // Use the DatabaseEvent and access its snapshot property
     DatabaseEvent event = await FirebaseDatabase.instance
         .ref()
         .child('users/$userId/device_token')

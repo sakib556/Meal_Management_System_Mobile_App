@@ -3,8 +3,8 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:meal_management/screens/home_screen.dart';
-import 'package:meal_management/screens/singup_screen.dart';
+import 'package:meal_management/screens/authentication/singup_screen.dart';
+import 'package:meal_management/screens/home/home_screen.dart';
 import 'package:meal_management/utils.dart';
 
 final TextEditingController emailController = TextEditingController();
@@ -139,7 +139,6 @@ class _LoginScreenState extends State<LoginScreen>
                   const SizedBox(height: 10),
                   TextButton(
                     onPressed: () {
-                      // Navigate to the SignupScreen when the "Sign up" link is tapped.
                       Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -151,7 +150,7 @@ class _LoginScreenState extends State<LoginScreen>
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 16,
-                        fontWeight: FontWeight.bold, // Add underline style.
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
@@ -186,12 +185,8 @@ class _LoginScreenState extends State<LoginScreen>
         }
         pushNavigateTo(context, const HomeScreen());
       } else {
-        // pushNavigateTo(context, const LoginScreen());
-
         EasyLoading.showSuccess("User null!");
       }
-      // Login successful, navigate to the home screen or any other desired screen
-      //Navigator.pushNamedAndRemoveUntil(context, '/home', (_) => false);
       isLoginLoading = false;
       setState(() {});
     } catch (e) {

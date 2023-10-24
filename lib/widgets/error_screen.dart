@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class ErrorScreen extends StatelessWidget {
-  const ErrorScreen({super.key, required this.details, this.onPressed});
+class ErrorButton extends StatelessWidget {
+  const ErrorButton({super.key, required this.details, this.onPressed});
   final String? details;
   final void Function()? onPressed;
 
