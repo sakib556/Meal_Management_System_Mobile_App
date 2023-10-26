@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:meal_management/screens/authentication/login_screen.dart';
+import 'package:meal_management/screens/home/components/home_page.dart';
 import 'package:meal_management/screens/home/home_screen.dart';
 
 class LandingScreen extends StatefulWidget {
@@ -49,7 +50,7 @@ class _LandingScreenState extends State<LandingScreen> {
             );
           } else if (snapshot.hasData) {
             if (snapshot.data != null && snapshot.data!.value != null) {
-              return const HomeScreen();
+              return const DashboardPage();
             } else {
               return const LoginScreen();
             }

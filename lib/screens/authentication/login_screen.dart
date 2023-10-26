@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:meal_management/screens/authentication/singup_screen.dart';
+import 'package:meal_management/screens/home/components/home_page.dart';
 import 'package:meal_management/screens/home/home_screen.dart';
 import 'package:meal_management/utils.dart';
 
@@ -183,7 +184,7 @@ class _LoginScreenState extends State<LoginScreen>
               .child('users/${response.user?.uid}/device_token')
               .set(deviceToken);
         }
-        pushNavigateTo(context, const HomeScreen());
+        pushNavigateTo(context, const DashboardPage());
       } else {
         EasyLoading.showSuccess("User null!");
       }
