@@ -138,25 +138,6 @@ class _DashboardPageState extends State<DashboardPage> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.all(4.0),
-            child: Row(
-              children: [
-                const Icon(Icons.home),
-                const SizedBox(
-                  width: 5,
-                ),
-                const Text('My Total Meals : '),
-                const SizedBox(
-                  width: 5,
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(4.0),
-                  child: Text(sumofMeals.toString()),
-                ),
-              ],
-            ),
-          ),
-          Padding(
             padding: const EdgeInsets.all(8.0),
             child: Card(
               elevation: 5,
@@ -188,7 +169,7 @@ class _DashboardPageState extends State<DashboardPage> {
                                       height: 80,
                                       width: 80,
                                       alignment: Alignment.center,
-                                      color: Colors.redAccent,
+                                      color: Colors.green,
                                       child: Column(
                                         mainAxisSize: MainAxisSize.min,
                                         children: [
@@ -205,7 +186,7 @@ class _DashboardPageState extends State<DashboardPage> {
                                       height: 80,
                                       width: 80,
                                       alignment: Alignment.center,
-                                      color: Colors.redAccent,
+                                      color: Colors.green,
                                       child: Column(
                                         mainAxisSize: MainAxisSize.min,
                                         children: [
@@ -234,7 +215,7 @@ class _DashboardPageState extends State<DashboardPage> {
                                       height: 80,
                                       width: 80,
                                       alignment: Alignment.center,
-                                      color: Colors.redAccent,
+                                      color: Colors.green,
                                       child: Column(
                                         mainAxisSize: MainAxisSize.min,
                                         children: [
@@ -251,7 +232,7 @@ class _DashboardPageState extends State<DashboardPage> {
                                       height: 80,
                                       width: 80,
                                       alignment: Alignment.center,
-                                      color: Colors.redAccent,
+                                      color: Colors.green,
                                       child: Column(
                                         mainAxisSize: MainAxisSize.min,
                                         children: [
@@ -386,7 +367,7 @@ class _DashboardPageState extends State<DashboardPage> {
                             height: 80,
                             width: 80,
                             alignment: Alignment.center,
-                            color: Colors.redAccent,
+                            color: Colors.green,
                             child: Column(
                               mainAxisSize: MainAxisSize.min,
                               children: [
@@ -403,7 +384,7 @@ class _DashboardPageState extends State<DashboardPage> {
                             height: 80,
                             width: 80,
                             alignment: Alignment.center,
-                            color: Colors.redAccent,
+                            color: Colors.green,
                             child: Column(
                               mainAxisSize: MainAxisSize.min,
                               children: [
