@@ -21,6 +21,18 @@ dependencies:
   shared_preferences: ^2.2.2
   flutter_speed_dial: ^7.0.0
   
+  google_fonts:
+  dio: 
+  connectivity_plus: 
+  flutter_riverpod: 
+  package_info_plus:
+  device_info_plus: 
+  expandable_bottom_sheet:
+  image_picker: 
+  geolocator: any
+  cached_network_image:
+  flutter_cache_manager: 
+  
 dev_dependencies:
   flutter_test:
     sdk: flutter

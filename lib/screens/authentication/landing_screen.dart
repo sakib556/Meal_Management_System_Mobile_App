@@ -3,7 +3,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:meal_management/screens/authentication/login_screen.dart';
 import 'package:meal_management/screens/home/components/home_page.dart';
-import 'package:meal_management/screens/home/home_screen.dart';
 
 class LandingScreen extends StatefulWidget {
   const LandingScreen({super.key});
