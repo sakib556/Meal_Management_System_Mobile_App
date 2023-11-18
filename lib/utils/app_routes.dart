@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:meal_management/screens/authentication/landing_screen.dart';
+import 'package:meal_management/modules/authentication/landing_screen.dart';
 
 enum AppRoutes {
   landing,

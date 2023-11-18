@@ -6,7 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:meal_management/constant/app_url.dart';
 import 'package:meal_management/data_provider/pref_helper.dart';
-import 'package:meal_management/screens/authentication/landing_screen.dart';
+import 'package:meal_management/modules/authentication/landing_screen.dart';
 import 'package:meal_management/utils/enum.dart';
 import 'package:meal_management/utils/navigation.dart';
 import 'package:meal_management/utils/network_connection.dart';
