@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:meal_management/constant/app_url.dart';
 import 'package:meal_management/constant/constant_key.dart';
 import 'package:meal_management/data_provider/pref_helper.dart';
+import 'package:meal_management/global/model/global_response.dart';
 import 'package:meal_management/global/widget/global_loader.dart';
 import 'package:meal_management/utils/app_routes.dart';
 import 'package:meal_management/utils/enum.dart';
@@ -13,8 +14,6 @@ import 'package:meal_management/utils/navigation.dart';
 import 'package:meal_management/utils/network_connection.dart';
 import 'package:meal_management/utils/styles/styles.dart';
 import 'package:meal_management/utils/view_util.dart';
-
-import '../global/model/global_response.dart';
 
 class ApiClient {
   final Dio _dio = Dio();
