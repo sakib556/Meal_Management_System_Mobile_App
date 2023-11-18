@@ -7,15 +7,15 @@ import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:meal_management/screens/authentication/login_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class DashboardPage extends StatefulWidget {
-  const DashboardPage({Key? key}) : super(key: key);
+class DashboardScreen extends StatefulWidget {
+  const DashboardScreen({Key? key}) : super(key: key);
   static const String routeName = '/dashboard';
 
   @override
-  State<DashboardPage> createState() => _DashboardPageState();
+  State<DashboardScreen> createState() => _DashboardScreenState();
 }
 
-class _DashboardPageState extends State<DashboardPage> {
+class _DashboardScreenState extends State<DashboardScreen> {
   double sumofCost = 0;
   double totalCost = 0;
   double sumofDeposit = 0;
