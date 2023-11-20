@@ -9,7 +9,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({Key? key}) : super(key: key);
-  static const String routeName = '/dashboard';
 
   @override
   State<DashboardScreen> createState() => _DashboardScreenState();
@@ -540,7 +539,7 @@ class _MyDrawerState extends State<MyDrawer> {
                         ),
                       ),
                 Text(
-                  FirebaseAuth.instance.currentUser!.email ?? "No email",
+                  FirebaseAuth.instance.currentUser?.email ?? "No email",
                   style: const TextStyle(fontSize: 18),
                 ),
 
@@ -584,11 +583,16 @@ class _MyDrawerState extends State<MyDrawer> {
               Navigator.pop(context);
             },
           ),
-          ListTile(
-            leading: const Icon(Icons.logout),
-            title: const Text('LogOut'),
-            onTap: () {},
-          ),
+          isLogoutLoading
+              ? const CircularProgressIndicator()
+              : ListTile(
+                  leading: const Icon(Icons.logout),
+                  title: const Text('Logout'),
+                  onTap: () {
+                    _logout(
+                        context); // Call the logout function with the context
+                  },
+                ),
         ],
       ),
     );
