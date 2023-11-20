@@ -1,4 +1,5 @@
 enum AppConstant {
+  ADMIN_EMAIL,
   USER_ID,
   TOKEN,
   LOGIN_STATUS,
@@ -34,7 +35,6 @@ enum AppConstant {
   EN,
   BN,
   FONTFAMILY,
-  
 }
 
 extension AppConstantExtention on AppConstant {
@@ -64,8 +64,6 @@ extension AppConstantExtention on AppConstant {
         return "MMMM y";
       case AppConstant.MMM:
         return "MMM";
-      case AppConstant.MMM:
-        return "MMMM";
       case AppConstant.YYYY_MM:
         return 'yyyy-MM';
       case AppConstant.YYYY_MM_DD:
@@ -110,13 +108,11 @@ extension AppConstantExtention on AppConstant {
         return 'bn';
       case AppConstant.FONTFAMILY:
         return 'Arboria';
-    
+      case AppConstant.ADMIN_EMAIL:
+        return 'admin@gmail.com';
 
       default:
         return "";
     }
   }
 }
-
-
-

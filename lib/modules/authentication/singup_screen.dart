@@ -3,10 +3,14 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:meal_management/constant/constant_key.dart';
 import 'package:meal_management/global/widget/global_button.dart';
 import 'package:meal_management/modules/authentication/login_screen.dart';
 import 'package:meal_management/modules/dashboard/components/dashboard_screen.dart';
 import 'package:meal_management/utils.dart';
+import 'package:meal_management/utils/app_routes.dart';
+import 'package:meal_management/utils/navigation.dart';
+import 'package:meal_management/utils/repositories/user_service.dart';
 import 'package:meal_management/utils/styles/k_colors.dart';
 
 class SignupScreen extends StatefulWidget {
@@ -18,6 +22,7 @@ class SignupScreen extends StatefulWidget {
 
 class _SignupScreenState extends State<SignupScreen>
     with SingleTickerProviderStateMixin {
+  TextEditingController userNameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmPasswordController = TextEditingController();
@@ -100,6 +105,23 @@ class _SignupScreenState extends State<SignupScreen>
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 20),
                         child: TextFormField(
+                          controller: userNameController,
+                          decoration: InputDecoration(
+                            hintText: 'Username',
+                            filled: true,
+                            fillColor: Colors.white.withOpacity(0.8),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
+                              borderSide: BorderSide.none,
+                            ),
+                            prefixIcon: const Icon(Icons.person),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: TextFormField(
                           controller: emailController,
                           decoration: InputDecoration(
                             hintText: 'Email',
@@ -133,6 +155,7 @@ class _SignupScreenState extends State<SignupScreen>
                             print(
                                 "email : ${emailController.text} pass :${passwordController.text} ");
                             if (emailController.text.isEmpty ||
+                                userNameController.text.isEmpty ||
                                 passwordController.text.isEmpty ||
                                 confirmPasswordController.text.isEmpty) {
                               EasyLoading.showError(
@@ -160,6 +183,7 @@ class _SignupScreenState extends State<SignupScreen>
     try {
       isLoading = true;
       setState(() {});
+      String userName = userNameController.text;
       String email = emailController.text.trim();
       String password = passwordController.text.trim();
       String confirmPassword = confirmPasswordController.text.trim();
@@ -181,6 +205,24 @@ class _SignupScreenState extends State<SignupScreen>
       // Show loading indicator while signing up
 
       // Create the user with Firebase authentication
+      // final userCreateResponse = await UserService().createUser(UserModel(
+      //     userName: userName,
+      //     email: email,
+      //     isAdmin: email == AppConstant.ADMIN_EMAIL.name,
+      //     isManager: false,
+      //     createdAt: DateTime.now()));
+      final result = await UserService().createUser(UserModel(
+        userName: userName,
+        email: email,
+        isAdmin: false,
+        isManager: false,
+      ));
+      if (result != null) {
+        EasyLoading.showSuccess("Success");
+      } else {
+        EasyLoading.showError("Null");
+        return;
+      }
       UserCredential response =
           await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: email,
@@ -188,7 +230,6 @@ class _SignupScreenState extends State<SignupScreen>
       );
       if (response.user != null) {
         // Successfully logged in
-
         // Get the device token
         FirebaseMessaging messaging = FirebaseMessaging.instance;
         String? deviceToken = await messaging.getToken();
@@ -199,9 +240,10 @@ class _SignupScreenState extends State<SignupScreen>
               .child('users/${response.user?.uid}/device_token')
               .set(deviceToken);
         }
+
         isLoading = false;
         setState(() {});
-        pushNavigateTo(context, const DashboardScreen());
+        Navigation.push(context, appRoutes: AppRoutes.dashboard);
         print('Signup successful! UserID: ${response.user?.uid}');
       } else {
         EasyLoading.showError("User null!");
