@@ -32,7 +32,7 @@ extension KColorExtention on KColor {
   Color get color {
     switch (this) {
       case KColor.primary:
-        return const Color(0xffA56CF7);
+        return Colors.blue;
       case KColor.secondary:
         return Color(0xff5EA7FF);
       case KColor.accent:

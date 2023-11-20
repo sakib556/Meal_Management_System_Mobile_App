@@ -36,7 +36,7 @@ class GlobalDateSelectionWidget extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             GlobalText(
-              str: DateFormat('EEE').format(date),
+              DateFormat('EEE').format(date),
               fontSize: 15,
               fontWeight: FontWeight.w400,
             ),
@@ -44,7 +44,7 @@ class GlobalDateSelectionWidget extends StatelessWidget {
               height: 4,
             ),
             GlobalText(
-              str: "${date.day}",
+              "${date.day}",
               fontSize: 18,
               fontWeight: FontWeight.w400,
             ),

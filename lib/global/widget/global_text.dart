@@ -16,9 +16,9 @@ class GlobalText extends StatelessWidget {
   final double? height;
   final String? fontFamily;
 
-  const GlobalText({
+  const GlobalText(
+    this.str, {
     Key? key,
-    required this.str,
     this.fontWeight = FontWeight.w400,
     this.fontSize,
     this.fontStyle,

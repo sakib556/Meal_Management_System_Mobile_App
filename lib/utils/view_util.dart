@@ -20,7 +20,7 @@ class ViewUtil {
       SnackBar(
         backgroundColor: color,
         content: GlobalText(
-          str: msg,
+          msg,
           fontWeight: FontWeight.w500,
           color: KColor.white.color,
         ),
@@ -47,7 +47,7 @@ class ViewUtil {
         // return object of type Dialog.
         return AlertDialog(
           title: GlobalText(
-            str: "Connection Error",
+            "Connection Error",
             fontWeight: FontWeight.w500,
           ),
           content: Column(
@@ -56,7 +56,7 @@ class ViewUtil {
             mainAxisSize: MainAxisSize.min,
             children: [
               GlobalText(
-                str: "Your internet connection appears to be offline",
+                "Your internet connection appears to be offline",
                 textAlign: TextAlign.center,
                 fontWeight: FontWeight.w500,
               ),

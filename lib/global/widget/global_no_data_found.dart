@@ -8,7 +8,7 @@ class GlobalNoDataFound extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Center(
       child: GlobalText(
-        str: "No Data Found",
+        "No Data Found",
         fontSize: 16,
         fontWeight: FontWeight.w600,
       ),

@@ -67,7 +67,7 @@ class GlobalButton extends StatelessWidget {
                       children: [
                         prefix ?? const SizedBox(),
                         GlobalText(
-                          str: text,
+                          text,
                           fontSize: fontSize,
                           color: textColor ?? KColor.white.color,
                           fontWeight: fontWeight,

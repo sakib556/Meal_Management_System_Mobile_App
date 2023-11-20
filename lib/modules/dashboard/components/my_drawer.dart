@@ -20,6 +20,7 @@ class _MyDrawerState extends State<MyDrawer> {
   late SharedPreferences _prefs;
   String profileImagePath = '';
   bool isLogoutLoading = false;
+
   @override
   void initState() {
     super.initState();

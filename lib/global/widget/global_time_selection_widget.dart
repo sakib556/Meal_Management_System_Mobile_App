@@ -33,7 +33,7 @@ class GlobalTimeSelectionWidget extends StatelessWidget {
                     isSelected ? KColor.primary.color : KColor.dashBack.color)),
         child: Center(
           child: GlobalText(
-            str: "12.00 AM",
+            "12.00 AM",
             fontSize: 16,
             fontWeight: FontWeight.w400,
             color: isEnabled ? null : KColor.grey.color,

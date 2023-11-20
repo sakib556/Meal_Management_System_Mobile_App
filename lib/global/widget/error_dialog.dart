@@ -44,7 +44,7 @@ class ErrorDialog extends StatelessWidget {
                     child: Container(
                       padding: EdgeInsets.only(right: 30),
                       child: GlobalText(
-                        str: "${erroMsg[index].toString()}",
+                        "${erroMsg[index].toString()}",
                         maxLines: 5,
                         overflow: TextOverflow.ellipsis,
                         textAlign: TextAlign.start,
