@@ -3,9 +3,11 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:meal_management/global/widget/global_button.dart';
 import 'package:meal_management/modules/authentication/login_screen.dart';
 import 'package:meal_management/modules/dashboard/components/dashboard_screen.dart';
 import 'package:meal_management/utils.dart';
+import 'package:meal_management/utils/styles/k_colors.dart';
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
@@ -48,11 +50,7 @@ class _SignupScreenState extends State<SignupScreen>
           gradient: LinearGradient(
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
-            colors: [
-              Colors.green[300]!,
-              Colors.green[500]!,
-              Colors.green[700]!
-            ],
+            colors: [Colors.blue[300]!, Colors.blue[500]!, Colors.blue[700]!],
           ),
         ),
         child: SafeArea(
@@ -79,13 +77,13 @@ class _SignupScreenState extends State<SignupScreen>
                     children: [
                       ScaleTransition(
                         scale: _fadeAnimation,
-                        child: const CircleAvatar(
+                        child: CircleAvatar(
                           radius: 70,
                           backgroundColor: Colors.white,
                           child: Icon(
                             Icons.food_bank,
                             size: 80,
-                            color: Colors.green,
+                            color: KColor.primary.color,
                           ),
                         ),
                       ),
@@ -126,36 +124,27 @@ class _SignupScreenState extends State<SignupScreen>
                         controller: confirmPasswordController,
                       ),
                       const SizedBox(height: 30),
-                      isLoading
-                          ? const CircularProgressIndicator()
-                          : ElevatedButton(
-                              onPressed: () {
-                                // Implement the signup logic here.
-                                print("Email: ${emailController.text}");
-                                print("Password: ${passwordController.text}");
-                                print(
-                                    "Confirm Password: ${confirmPasswordController.text}");
-                                _handleSignup(context);
-                              },
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.white,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 50,
-                                  vertical: 15,
-                                ),
-                              ),
-                              child: const Text(
-                                'SIGN UP',
-                                style: TextStyle(
-                                  color: Colors.green,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
+                      GlobalButton(
+                          loading: isLoading,
+                          color: Colors.white,
+                          textColor: KColor.primary.color,
+                          text: "SIGN UP",
+                          onTap: () {
+                            print(
+                                "email : ${emailController.text} pass :${passwordController.text} ");
+                            if (emailController.text.isEmpty ||
+                                passwordController.text.isEmpty ||
+                                confirmPasswordController.text.isEmpty) {
+                              EasyLoading.showError(
+                                  "Please enter email and password.");
+                              return;
+                            }
+                            print("Email: ${emailController.text}");
+                            print("Password: ${passwordController.text}");
+                            print(
+                                "Confirm Password: ${confirmPasswordController.text}");
+                            _handleSignup(context);
+                          }),
                     ],
                   ),
                 ),

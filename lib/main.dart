@@ -59,13 +59,7 @@ class MyApp extends StatelessWidget {
               secondary: KColor.secondary.color,
             ),
       ),
-      builder: (context, widget) {
-        EasyLoading.init();
-        return ScrollConfiguration(
-          behavior: const ScrollBehaviorModified(),
-          child: widget ?? const SizedBox(),
-        );
-      },
+      builder: EasyLoading.init(),
       home: const LandingScreen(),
     );
   }
