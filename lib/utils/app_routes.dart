@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:meal_management/modules/authentication/landing_screen.dart';
-import 'package:meal_management/modules/dashboard/components/dashboard_screen.dart';
+import 'package:meal_management/modules/dashboard/dashboard_screen.dart';
 
 enum AppRoutes {
   landing,

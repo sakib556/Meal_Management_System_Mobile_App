@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:meal_management/modules/authentication/login_screen.dart';
-import 'package:meal_management/modules/dashboard/components/dashboard_screen.dart';
+import 'package:meal_management/modules/dashboard/dashboard_screen.dart';
 import 'package:meal_management/utils/styles/k_colors.dart';
 
 class LandingScreen extends StatefulWidget {

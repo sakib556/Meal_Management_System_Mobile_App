@@ -6,7 +6,7 @@ import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:meal_management/global/widget/global_button.dart';
 import 'package:meal_management/global/widget/global_text.dart';
 import 'package:meal_management/modules/authentication/singup_screen.dart';
-import 'package:meal_management/modules/dashboard/components/dashboard_screen.dart';
+import 'package:meal_management/modules/dashboard/dashboard_screen.dart';
 import 'package:meal_management/utils.dart';
 import 'package:meal_management/utils/styles/k_colors.dart';
 

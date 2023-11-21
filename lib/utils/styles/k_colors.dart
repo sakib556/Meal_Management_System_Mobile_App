@@ -3,16 +3,27 @@ import 'package:flutter/material.dart';
 enum KColor {
   primary,
   secondary,
+  background,
   accent,
+  deepPrimary,
+  softPrimary,
   red,
-  redStar,
   white,
   black,
+  softGrey,
   grey,
+  grey2,
+  deepGrey,
+  line,
+  deep,
+  deep2,
+  deep3,
+  deep4,
   divider,
   fill,
   transparent,
   enableBorder,
+  border,
   fromText,
   statusBar,
   addbtn,
@@ -21,68 +32,81 @@ enum KColor {
   drawerHeader,
   dropDownfill,
   bookingText,
-  tagGreen,
-  notificationItembg,
-  black25,
-  alternateColor,
-  getStartedBackground,
+  homeGradientStart,
+  homeGradientEnd,
 }
 
 extension KColorExtention on KColor {
   Color get color {
     switch (this) {
       case KColor.primary:
-        return Colors.blue;
+        return Color.fromARGB(255, 4, 6, 130);
+      // return const Color(0xff190482);
+      //  return const Color(0xff645cbb);
       case KColor.secondary:
-        return Color(0xff5EA7FF);
+        return const Color(0xff645cbb);
       case KColor.accent:
-        return Colors.blue;
+        return const Color(0xff0D9488);
+      case KColor.softPrimary:
+        return const Color(0xFFC2D9FF);
+      case KColor.deepPrimary:
+        return Color.fromARGB(255, 8, 0, 49);
+      case KColor.background:
+        return const Color.fromARGB(255, 251, 250, 250);
       case KColor.red:
-        return Color(0xffE42B2B);
+        return const Color(0xffE42B2B);
+      case KColor.softGrey:
+        return const Color(0xff959B9A);
       case KColor.grey:
-        return Color.fromARGB(255, 157, 157, 157);
+        return const Color(0xffABB3BB);
+      case KColor.grey2:
+        return const Color(0xFFC1C1C1);
+      case KColor.deepGrey:
+        return const Color(0xFF666465);
+      case KColor.line:
+        return const Color(0xffC3C7E5);
       case KColor.addbtn:
-        return Color(0xFFA8CFFF);
+        return const Color(0xFFA8CFFF);
       case KColor.black:
         return Colors.black;
+      case KColor.deep:
+        return const Color(0xFF1E263C);
+      case KColor.deep2:
+        return const Color(0xFF2C2328);
+      case KColor.deep3:
+        return const Color(0xFF666465);
+      case KColor.deep4:
+        return const Color(0xFF40363C);
       case KColor.divider:
-        return Color(0xffE6E6E6);
+        return const Color(0xffE6E6E6);
       case KColor.enableBorder:
-        return Color(0xffE0E0E0);
+        return const Color(0xffDAD0DA);
+      case KColor.border:
+        return const Color(0xffEAECF8);
       case KColor.fill:
-        return Color.fromARGB(255, 247, 246, 246);
+        return const Color.fromARGB(255, 247, 246, 246);
       case KColor.fromText:
-        return Color(0xff7B7A7A);
+        return const Color(0xff7B7A7A);
       case KColor.white:
-        return Color(0xffffffff);
+        return Colors.white;
       case KColor.statusBar:
-        return Color(0xff3E95FF);
+        return const Color(0xff3E95FF);
       case KColor.transparent:
         return Colors.transparent;
       case KColor.formtextFill:
-        return Color(0xffFCFCFC);
+        return const Color(0xffFCFCFC);
       case KColor.drawerHeader:
-        return Color(0xFF5EA7FF);
+        return const Color(0xFF5EA7FF);
       case KColor.dropDownfill:
-        return Color(0xFFFCFCFC);
+        return const Color(0xFFFCFCFC);
       case KColor.dashBack:
-        return Color(0xffF8F8F8);
+        return const Color(0xffF8F8F8);
       case KColor.bookingText:
-        return Color(0xff808080);
-      case KColor.tagGreen:
-        return Color(0xff74FA93);
-      case KColor.tagGreen:
-        return Color(0xffF1F1F1);
-      case KColor.notificationItembg:
-        return Color(0xffF1F1F1);
-      case KColor.black25:
-        return Color.fromRGBO(0, 0, 0, 0.25);
-      case KColor.alternateColor:
-        return Color(0xffEB4483);
-      case KColor.getStartedBackground:
-        return const Color(0xff8E8A87);
-      case KColor.redStar:
-        return const Color(0xffFF0000);
+        return const Color(0xff808080);
+      case KColor.homeGradientStart:
+        return const Color(0xffFFF7F9);
+      case KColor.homeGradientEnd:
+        return const Color(0x00FDF2F5);
       default:
         return Colors.blue;
     }

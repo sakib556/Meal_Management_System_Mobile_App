@@ -22,7 +22,7 @@ Future<void> main() async {
       DeviceOrientation.portraitDown,
     ],
   );
-  runApp(ProviderScope(child: MyApp()));
+  runApp(const ProviderScope(child: MyApp()));
 }
 
 /// Make sure you always init shared pref first. It has token and token is need
