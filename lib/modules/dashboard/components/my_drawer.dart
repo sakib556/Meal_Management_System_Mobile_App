@@ -5,6 +5,10 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:meal_management/modules/authentication/login_screen.dart';
+import 'package:meal_management/modules/dashboard/sub_modules/cost_form.dart';
+import 'package:meal_management/modules/dashboard/sub_modules/meal_form.dart';
+import 'package:meal_management/modules/dashboard/sub_modules/member_form.dart';
+import 'package:meal_management/utils/bottom_sheet_util.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class MyDrawer extends StatefulWidget {
@@ -115,24 +119,27 @@ class _MyDrawerState extends State<MyDrawer> {
             },
           ),
           ListTile(
-            leading: const Icon(Icons.book),
-            title: const Text(' Add Costs '),
+            leading: const Icon(Icons.person),
+            title: const Text('Add Member'),
             onTap: () {
-              //   Navigator.pushNamed(context, AddCostsPage.routeName);
+              SheetUtil.globalBottomSheet(
+                  context: context, child: const MemberForm());
             },
           ),
           ListTile(
-            leading: const Icon(Icons.workspace_premium),
-            title: const Text(' Add Money'),
+            leading: const Icon(Icons.restaurant),
+            title: const Text('Add Meal'),
             onTap: () {
-              //    Navigator.pushNamed(context, AddMembersMoney.routeName);
+              SheetUtil.globalBottomSheet(
+                  context: context, child: const MealForm());
             },
           ),
           ListTile(
-            leading: const Icon(Icons.video_label),
-            title: const Text(' Saved Videos '),
+            leading: const Icon(Icons.paid),
+            title: const Text('Add Cost'),
             onTap: () {
-              Navigator.pop(context);
+              SheetUtil.globalBottomSheet(
+                  context: context, child: const CostForm());
             },
           ),
           ListTile(

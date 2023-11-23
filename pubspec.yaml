@@ -32,6 +32,8 @@ dependencies:
   geolocator: any
   cached_network_image:
   flutter_cache_manager: 
+  flutter_spinkit: ^5.2.0
+  shimmer: ^3.0.0
   
 dev_dependencies:
   flutter_test:
