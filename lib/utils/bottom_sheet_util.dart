@@ -22,7 +22,7 @@ class SheetUtil {
             return false;
           },
           child: DraggableScrollableSheet(
-            initialChildSize: 0.7,
+            initialChildSize: 0.9,
             maxChildSize: 0.9,
             minChildSize: 0.5,
             builder: (BuildContext context, ScrollController scrollController) {
