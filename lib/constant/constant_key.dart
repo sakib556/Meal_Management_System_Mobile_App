@@ -35,6 +35,10 @@ enum AppConstant {
   EN,
   BN,
   FONTFAMILY,
+  male,
+  female,
+  bazar,
+  utility,
 }
 
 extension AppConstantExtention on AppConstant {
@@ -46,6 +50,14 @@ extension AppConstantExtention on AppConstant {
         return "TOKEN";
       case AppConstant.LOGIN_STATUS:
         return "LOGIN_STATUS";
+      case AppConstant.male:
+        return "Male";
+      case AppConstant.female:
+        return "Female";
+      case AppConstant.bazar:
+        return "Bazar";
+      case AppConstant.utility:
+        return "Utility";
       case AppConstant.MY_BASKET_PREF_KEY:
         return "MY_BASKET_PREF_KEY";
       case AppConstant.LANGUAGE:

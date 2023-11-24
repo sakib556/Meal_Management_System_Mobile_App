@@ -33,6 +33,36 @@ class ViewUtil {
     );
   }
 
+  static requiredMessage() {
+    globalSnackbar("Please fill in all the required fields.");
+  }
+
+  static globalSnackbar(
+    String msg, {
+    String? btnName,
+    void Function()? onPressed,
+  }) {
+    /**
+     * Using ScaffoldMessenger we can easily access
+     * this snackbar from anywhere
+     */
+
+    return ScaffoldMessenger.of(Navigation.key.currentContext!).showSnackBar(
+      SnackBar(
+        content: GlobalText(
+          msg,
+          fontWeight: FontWeight.w500,
+          color: KColor.white.color,
+        ),
+        action: SnackBarAction(
+          label: btnName ?? "",
+          textColor: btnName == null ? Colors.transparent : KColor.white.color,
+          onPressed: onPressed ?? () {},
+        ),
+      ),
+    );
+  }
+
   // this varialble is for internet connection check.
   static bool isPresentedDialog = false;
 
