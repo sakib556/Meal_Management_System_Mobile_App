@@ -29,26 +29,6 @@ class UserService {
     return null;
   }
 
-  // Future<String?> createUser(UserModel user) async {
-  //   try {
-  //     final url = '$baseUrl/user.php?action=createUserModel';
-  //     print('User create url : $url');
-  //     final response = await _dio.post(
-  //       url,
-  //       data: user.toJson(),
-  //     );
-  //     if (response.statusCode == 200) {
-  //       print('User response code 200');
-
-  //       return response.data.toString();
-  //     }
-  //   } catch (e) {
-  //     print('Error creating user: $e');
-  //     // throw e;
-  //   }
-  //   return null;
-  // }
-
   Future<void> updateUser(UserModel user) async {
     try {
       await _dio.post(

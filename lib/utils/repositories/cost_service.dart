@@ -1,104 +1,140 @@
 import 'package:dio/dio.dart';
 import 'package:meal_management/constant/app_url.dart';
+import 'package:meal_management/global/model/cost.dart';
 
-class CostService {
-  final Dio _dio = Dio();
+class CostApi {
+  static final Dio _dio = Dio();
 
-  // Replace with your backend URL
-  final String baseUrl = AppUrl.base.url;
+  static final String baseUrl = "${AppUrl.base.url}/cost.php";
 
-  Future<void> createCost(Cost cost) async {
+  static Future<List<Cost>?> getAllCosts() async {
     try {
-      await _dio.post(
-        '$baseUrl/cost.php?action=createCost',
+      final response = await _dio.get('$baseUrl?action=getAllCosts');
+
+      if (response.statusCode == 200) {
+        final List<dynamic> data = response.data['costs'];
+        return data.map((json) => Cost.fromJson(json)).toList();
+      } else {
+        throw DioException(
+          requestOptions: response.requestOptions,
+          response: response,
+        );
+      }
+    } on DioException catch (e) {
+      print(e);
+    }
+    return null;
+  }
+
+  static Future<Cost?> getCostById(int id) async {
+    try {
+      final response = await _dio.get('$baseUrl?action=getCostById&id=$id');
+
+      if (response.statusCode == 200) {
+        return Cost.fromJson(response.data);
+      } else {
+        throw DioException(
+          requestOptions: response.requestOptions,
+          response: response,
+        );
+      }
+    } on DioException catch (e) {
+      print(e);
+    }
+    return null;
+  }
+
+  static Future<List<Cost>?> getAllCostsByMemberId(int memberId) async {
+    try {
+      final response = await _dio
+          .get('$baseUrl?action=getAllCostsByMemberId&memberId=$memberId');
+
+      if (response.statusCode == 200) {
+        final List<dynamic> data = response.data['costs'];
+        return data.map((json) => Cost.fromJson(json)).toList();
+      } else {
+        throw DioException(
+          requestOptions: response.requestOptions,
+          response: response,
+        );
+      }
+    } on DioException catch (e) {
+      print(e);
+    }
+    return null;
+  }
+
+  static Future<List<Cost>?> getAllCostsByUserId(int userId) async {
+    try {
+      final response =
+          await _dio.get('$baseUrl?action=getAllCostsByUserId&userId=$userId');
+
+      if (response.statusCode == 200) {
+        final List<dynamic> data = response.data['costs'];
+        return data.map((json) => Cost.fromJson(json)).toList();
+      } else {
+        throw DioException(
+          requestOptions: response.requestOptions,
+          response: response,
+        );
+      }
+    } on DioException catch (e) {
+      print(e);
+    }
+    return null;
+  }
+
+  static Future<void> createCost(Cost cost) async {
+    try {
+      final response = await _dio.post(
+        '$baseUrl?action=createCost',
         data: cost.toJson(),
       );
-    } catch (e) {
-      print('Error creating cost: $e');
-      throw e;
+
+      print(response.data);
+      if (response.statusCode != 200) {
+        print(response.data);
+        throw DioException(
+          requestOptions: response.requestOptions,
+          response: response,
+        );
+      }
+    } on DioException catch (e) {
+      print(e);
     }
   }
 
-  Future<void> updateCost(Cost cost) async {
+  static Future<void> updateCost(Cost cost) async {
     try {
-      await _dio.post(
-        '$baseUrl/cost.php?action=updateCost',
+      final response = await _dio.post(
+        '$baseUrl?action=updateCost',
         data: cost.toJson(),
       );
-    } catch (e) {
-      print('Error updating cost: $e');
-      throw e;
+
+      if (response.statusCode != 200) {
+        throw DioException(
+          requestOptions: response.requestOptions,
+          response: response,
+        );
+      }
+    } on DioException catch (e) {
+      print(e);
     }
   }
 
-  Future<void> deleteCost(int id) async {
+  static Future<void> deleteCost(int id) async {
     try {
-      await _dio.post(
-        '$baseUrl/cost.php?action=deleteCost',
-        data: {
-          'id': id,
-        },
-      );
-    } catch (e) {
-      print('Error deleting cost: $e');
-      throw e;
+      final response =
+          await _dio.post('$baseUrl?action=deleteCost', data: {'id': id});
+
+      if (response.statusCode != 200) {
+        throw DioException(
+          requestOptions: response.requestOptions,
+          response: response,
+        );
+      }
+    } on DioException catch (e) {
+      print(e);
     }
-  }
-
-  Future<List<Cost>> getCostList() async {
-    try {
-      final response = await _dio.get('$baseUrl/cost.php?action=getCostList');
-      final costList = (response.data['costs'] as List)
-          .map((costJson) => Cost.fromJson(costJson))
-          .toList();
-      return costList;
-    } catch (e) {
-      print('Error fetching cost list: $e');
-      throw e;
-    }
-  }
-}
-
-class Cost {
-  final int? id;
-  final int? userId;
-  final String? costType;
-  final String? details;
-  final double? amount;
-  final DateTime? date;
-  final String? createdAt;
-
-  Cost({
-    this.id,
-    this.userId,
-    this.costType,
-    this.details,
-    this.amount,
-    this.date,
-    this.createdAt,
-  });
-
-  factory Cost.fromJson(Map<String, dynamic> json) {
-    return Cost(
-      id: json['id'],
-      userId: json['userId'],
-      costType: json['costType'],
-      details: json['details'],
-      amount: json['amount']?.toDouble(),
-      date: json['date'] != null ? DateTime.parse(json['date']) : null,
-      createdAt: json['createdAt'],
-    );
-  }
-
-  Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'userId': userId,
-      'costType': costType,
-      'details': details,
-      'amount': amount,
-      'date': date?.toIso8601String(),
-      'createdAt': createdAt,
-    };
   }
 }

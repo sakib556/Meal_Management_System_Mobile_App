@@ -1,91 +1,131 @@
 import 'package:dio/dio.dart';
 import 'package:meal_management/constant/app_url.dart';
+import 'package:meal_management/global/model/meal.dart';
 
-class MealService {
-  final Dio _dio = Dio();
+class MealApi {
+  static final Dio _dio = Dio();
+  static final baseUrl = "${AppUrl.base.url}/meal.php";
 
-  // Replace with your backend URL
-  final String baseUrl = AppUrl.base.url;
-
-  Future<void> createMeal(Meal meal) async {
+  static Future<List<Meal>> getAllMeals() async {
     try {
-      await _dio.post(
-        '$baseUrl/meal.php?action=createMeal',
+      final response = await _dio.get('$baseUrl?action=getAllMeals');
+
+      if (response.statusCode == 200) {
+        List mealsJson = response.data['meals'];
+        List<Meal> meals =
+            mealsJson.map((json) => Meal.fromJson(json)).toList();
+        return meals;
+      } else {
+        print("Error $response");
+        return [];
+      }
+    } on DioException catch (e) {
+      print("DioException [$e]");
+      return [];
+    }
+  }
+
+  static Future<Meal?> getMealById(int mealId) async {
+    try {
+      final response = await _dio.get('$baseUrl?action=getMealById&id=$mealId');
+
+      if (response.statusCode == 200) {
+        return Meal.fromJson(response.data);
+      } else {
+        print("Error $response");
+        return null;
+      }
+    } on DioException catch (e) {
+      print("DioException [$e]");
+      return null;
+    }
+  }
+
+  static Future<List<Meal>?> getAllMealsByMemberId(int memberId) async {
+    try {
+      final response = await _dio
+          .get('$baseUrl?action=getAllMealsByMemberId&memberId=$memberId');
+
+      if (response.statusCode == 200) {
+        List mealsJson = response.data['meals'];
+        List<Meal> meals =
+            mealsJson.map((json) => Meal.fromJson(json)).toList();
+        return meals;
+      } else {
+        print("Error $response");
+        return [];
+      }
+    } on DioException catch (e) {
+      print("DioException [$e]");
+      return [];
+    }
+  }
+
+  static Future<List<Meal>> getAllMealsByUserId(int userId) async {
+    try {
+      final response =
+          await _dio.get('$baseUrl?action=getAllMealsByUserId&userId=$userId');
+
+      if (response.statusCode == 200) {
+        List mealsJson = response.data['meals'];
+        List<Meal> meals =
+            mealsJson.map((json) => Meal.fromJson(json)).toList();
+        return meals;
+      } else {
+        print("Error $response");
+        return [];
+      }
+    } on DioException catch (e) {
+      print("DioException [$e]");
+      return [];
+    }
+  }
+
+  static Future<void> createMeal(Meal meal) async {
+    try {
+      final response = await _dio.post(
+        '$baseUrl?action=createMeal',
         data: meal.toJson(),
       );
-    } catch (e) {
-      print('Error creating meal: $e');
-      throw e;
+
+      print("res ${response.data}");
+      if (response.statusCode != 200) {
+        print("Error $response");
+      }
+    } on DioException catch (e) {
+      print("DioException [$e]");
     }
   }
 
-  Future<void> updateMeal(Meal meal) async {
+  static Future<void> updateMeal(Meal meal) async {
     try {
-      await _dio.post(
-        '$baseUrl/meal.php?action=updateMeal',
+      final response = await _dio.post(
+        '$baseUrl?action=updateMeal',
         data: meal.toJson(),
       );
-    } catch (e) {
-      print('Error updating meal: $e');
-      throw e;
+
+      if (response.statusCode != 200) {
+        print("Error $response");
+      }
+    } on DioException catch (e) {
+      print("DioException [$e]");
     }
   }
 
-  Future<void> deleteMeal(int id) async {
+  static Future<void> deleteMeal(int mealId) async {
     try {
-      await _dio.post(
-        '$baseUrl/meal.php?action=deleteMeal',
-        data: {
-          'id': id,
-        },
+      final response = await _dio.post(
+        '$baseUrl?action=deleteMeal',
+        data: {'id': mealId},
       );
-    } catch (e) {
-      print('Error deleting meal: $e');
-      throw e;
+
+      if (response.statusCode != 200) {
+        print("Error $response");
+      }
+    } on DioException catch (e) {
+      print("DioException [$e]");
     }
   }
 
-  Future<List<Meal>> getMealList() async {
-    try {
-      final response = await _dio.get('$baseUrl/meal.php?action=getMealList');
-      final mealList = (response.data['meals'] as List)
-          .map((mealJson) => Meal.fromJson(mealJson))
-          .toList();
-      return mealList;
-    } catch (e) {
-      print('Error fetching meal list: $e');
-      throw e;
-    }
-  }
-}
-
-class Meal {
-  final int? id;
-  final int userId;
-  final int mealCount;
-  final DateTime date;
-
-  Meal(
-      {this.id,
-      required this.userId,
-      required this.mealCount,
-      required this.date});
-
-  factory Meal.fromJson(Map<String, dynamic> json) {
-    return Meal(
-      id: json['id'],
-      userId: json['userId'],
-      mealCount: json['mealCount'],
-      date: DateTime.parse(json['date']),
-    );
-  }
-
-  Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'userId': userId,
-      'mealCount': mealCount,
-      'date': date.toIso8601String(),
-    };
-  }
+  // Add other CRUD operations as needed
 }
