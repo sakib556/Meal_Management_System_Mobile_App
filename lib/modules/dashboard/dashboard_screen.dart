@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:meal_management/modules/dashboard/components/button_section.dart';
 import 'package:meal_management/modules/dashboard/components/my_drawer.dart';
+import 'package:meal_management/modules/dashboard/model/dashboard.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({Key? key}) : super(key: key);
@@ -11,12 +12,38 @@ class DashboardScreen extends StatefulWidget {
 }
 
 class _DashboardScreenState extends State<DashboardScreen> {
-  int totalMember = 6;
-  double totalCost = 2000;
-  double bazarCost = 1500;
-  int totalMeal = 10;
-  double totalRemainingBalance = 0;
-  bool callOnce = true;
+  String totalMember = "";
+  double bazarCost = 0;
+  double utilityCost = 0;
+  double totalCost = 0;
+  String totalMeal = "";
+  String costPerMeal = "";
+  // String totalRemainingBalance = 0;
+  // String callOnce = true;
+  @override
+  void initState() {
+    super.initState();
+    getDashboardData();
+  }
+
+  DashboardInfo? dashboardInfo;
+  getDashboardData() async {
+    try {
+      dashboardInfo = await getDashboardInfo('2023-11-01', '2023-11-30', '2');
+      print('Total Members: ${dashboardInfo?.totalMembers ?? ""}');
+      print('Total Bazar Cost: ${dashboardInfo?.totalBazarCost}');
+      totalMember = dashboardInfo?.totalMembers ?? totalMember;
+      bazarCost = dashboardInfo?.totalBazarCost ?? bazarCost;
+      utilityCost = dashboardInfo?.totalUtilityCost ?? utilityCost;
+      totalCost = bazarCost * utilityCost;
+      costPerMeal = dashboardInfo?.costPerMeal ?? costPerMeal;
+      totalMeal = dashboardInfo?.totalMeals ?? totalMeal;
+      setState(() {});
+      // ... other properties and details
+    } catch (error) {
+      print('Error: $error');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +87,8 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 ),
                 _buildStatRow(
                   title: 'Cost Per Meals',
-                  value: (bazarCost / totalMeal).toStringAsFixed(2),
+                  value: costPerMeal,
+                  //    value: costPerMeal.toStringAsFixed(2),
                   icon: Icons.paid,
                 ),
                 // _buildStatRow(
