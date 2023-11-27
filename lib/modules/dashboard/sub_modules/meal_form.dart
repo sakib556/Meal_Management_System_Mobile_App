@@ -7,7 +7,7 @@ import 'package:meal_management/global/widget/global_dropdown.dart';
 import 'package:meal_management/global/widget/global_space.dart';
 import 'package:meal_management/global/widget/text_fields.dart';
 import 'package:meal_management/global/widget/titles.dart';
-import 'package:meal_management/modules/dashboard/sub_modules/cost_form.dart';
+import 'package:meal_management/modules/dashboard/sub_modules/cost_form/views/cost_form.dart';
 import 'package:meal_management/utils/repositories/meal_service.dart';
 import 'package:meal_management/utils/view_util.dart';
 

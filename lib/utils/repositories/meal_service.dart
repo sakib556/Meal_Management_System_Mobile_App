@@ -88,8 +88,10 @@ class MealApi {
         data: meal.toJson(),
       );
 
-      print("res ${response.data}");
-      if (response.statusCode != 200) {
+      print("res ${response.data}...");
+      if (response.statusCode == 200) {
+        print("Success $response");
+      } else {
         print("Error $response");
       }
     } on DioException catch (e) {

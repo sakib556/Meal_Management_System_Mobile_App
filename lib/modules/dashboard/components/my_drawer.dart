@@ -5,7 +5,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:meal_management/modules/authentication/login_screen.dart';
-import 'package:meal_management/modules/dashboard/sub_modules/cost_form.dart';
+import 'package:meal_management/modules/dashboard/sub_modules/cost_form/views/cost_form.dart';
 import 'package:meal_management/modules/dashboard/sub_modules/meal_form.dart';
 import 'package:meal_management/modules/dashboard/sub_modules/member_form.dart';
 import 'package:meal_management/utils/bottom_sheet_util.dart';
