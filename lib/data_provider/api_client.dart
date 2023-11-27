@@ -170,7 +170,7 @@ class ApiClient {
         response = await _dio.post(
           url,
           // queryParameters: params,
-          data: data != null ? data : params,
+          data: data ?? params,
         );
       } else if (method == Method.DELETE) {
         response = await _dio.delete(url);
@@ -206,7 +206,7 @@ class ApiClient {
       );
 
       // Handle Error type if dio catches anything.
-    } on DioError catch (e) {
+    } on DioException catch (e) {
       e.log();
       if (showLoader == true) {
         Navigation.pop(Navigation.key.currentContext);
