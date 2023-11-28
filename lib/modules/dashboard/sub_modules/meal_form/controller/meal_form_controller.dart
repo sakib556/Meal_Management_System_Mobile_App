@@ -2,29 +2,27 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:meal_management/constant/app_url.dart';
 import 'package:meal_management/data_provider/api_client.dart';
-import 'package:meal_management/global/model/cost.dart';
+import 'package:meal_management/global/model/meal.dart';
 import 'package:meal_management/modules/dashboard/controller/dashboard_controller.dart';
-import 'package:meal_management/modules/dashboard/sub_modules/cost_form/controller/cost_form_state.dart';
+import 'package:meal_management/modules/dashboard/sub_modules/meal_form/controller/meal_form_state.dart';
 import 'package:meal_management/utils/enum.dart';
 import 'package:meal_management/utils/extension.dart';
 import 'package:meal_management/utils/navigation.dart';
 import 'package:meal_management/utils/view_util.dart';
 
-final costFormController =
-    StateNotifierProvider.autoDispose<CostFormController, CostFormState>(
-        (ref) => CostFormController());
+final mealFormController =
+    StateNotifierProvider.autoDispose<MealFormController, MealFormState>(
+        (ref) => MealFormController());
 
-class CostFormController extends StateNotifier<CostFormState> {
-  CostFormController()
-      : super(const CostFormState(
+class MealFormController extends StateNotifier<MealFormState> {
+  MealFormController()
+      : super(const MealFormState(
           isButtonLoading: false,
         ));
   int? id;
   int? memberId;
-  double? amount;
-  String? costType;
-  String? details;
-  DateTime costDate = DateTime.now();
+  int? mealCount;
+  DateTime mealDate = DateTime.now();
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   final ApiClient _apiClient = ApiClient();
@@ -32,20 +30,16 @@ class CostFormController extends StateNotifier<CostFormState> {
   Future<void> submitForm() async {
     try {
       state = state.copyWith(isButtonLoading: true);
-      print("$memberId $amount $costType $details $costDate");
+      print("$memberId $mealCount $mealDate");
       if (formKey.currentState!.validate()) {
-        Cost cost = Cost(
-            memberId: memberId!,
-            amount: amount!,
-            costType: costType!,
-            details: details!,
-            costDate: costDate);
-        final String url = "${AppUrl.base.url}/cost.php?action=createCost";
+        Meal meal = Meal(
+            memberId: memberId!, mealCount: mealCount!, mealDate: mealDate);
+        const String url = "/meal.php?action=createMeal";
         'url is: $url'.log();
         await _apiClient.request(
           url: url,
           method: Method.POST,
-          params: cost.toJson(),
+          params: meal.toJson(),
           onSuccessFunction: (response) {
             print("response is $response");
             Future(() {
@@ -54,7 +48,7 @@ class CostFormController extends StateNotifier<CostFormState> {
                   .getDashboardData();
             });
             Navigation.key.currentState!.pop();
-            ViewUtil.globalSnackbar("Cost created !");
+            ViewUtil.globalSnackbar("Meal created !");
             state = state.copyWith(isButtonLoading: false);
           },
         );
@@ -69,21 +63,19 @@ class CostFormController extends StateNotifier<CostFormState> {
   Future<void> updateForm() async {
     try {
       state = state.copyWith(isButtonLoading: true);
-      print("$id $memberId $amount $costType $details $costDate");
+      print("$id $memberId $mealCount $mealDate");
       if (formKey.currentState!.validate()) {
-        Cost cost = Cost(
+        Meal meal = Meal(
             id: id!,
             memberId: memberId!,
-            amount: amount!,
-            costType: costType!,
-            details: details!,
-            costDate: costDate);
-        const String url = "/cost.php?action=updateCost";
+            mealCount: mealCount!,
+            mealDate: mealDate);
+        const String url = "/meal.php?action=updateMeal";
         'url is: $url'.log();
         await _apiClient.request(
           url: url,
           method: Method.PUT,
-          params: cost.toJson(),
+          params: meal.toJson(),
           onSuccessFunction: (response) {
             print("response is $response");
             Future(() {
@@ -92,7 +84,7 @@ class CostFormController extends StateNotifier<CostFormState> {
                   .getDashboardData();
             });
             Navigation.key.currentState!.pop();
-            ViewUtil.globalSnackbar("Cost Updated !");
+            ViewUtil.globalSnackbar("Meal Updated !");
             state = state.copyWith(isButtonLoading: false);
           },
         );

@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 
 @immutable
-class CostFormState {
+class MealFormState {
   final bool isButtonLoading; // New property for loading state
 
-  const CostFormState({
+  const MealFormState({
     required this.isButtonLoading, // Default to false
   });
 
-  CostFormState copyWith({
+  MealFormState copyWith({
     bool? isButtonLoading,
   }) {
-    return CostFormState(
+    return MealFormState(
       isButtonLoading: isButtonLoading ?? this.isButtonLoading,
     );
   }

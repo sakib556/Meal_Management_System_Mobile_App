@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:meal_management/modules/dashboard/sub_modules/cost_form/views/cost_form.dart';
-import 'package:meal_management/modules/dashboard/sub_modules/meal_form.dart';
-import 'package:meal_management/modules/dashboard/sub_modules/member_form.dart';
+import 'package:meal_management/modules/dashboard/sub_modules/meal_form/views/meal_form.dart';
+import 'package:meal_management/modules/dashboard/sub_modules/member_form/views/member_form.dart';
 import 'package:meal_management/utils/bottom_sheet_util.dart';
 
 class ButtonSection extends StatelessWidget {
