@@ -3,7 +3,11 @@ class DashboardResponse {
   DashboardData? data;
   String? message;
 
-  DashboardResponse({this.status, this.data, this.message});
+  DashboardResponse({
+    this.status,
+    this.data,
+    this.message,
+  });
 
   factory DashboardResponse.fromMap(Map<String, dynamic> map) {
     return DashboardResponse(
@@ -16,11 +20,11 @@ class DashboardResponse {
 
 class DashboardData {
   int? totalMembers;
-  double? totalBazarCost;
-  double? totalUtilityCost;
+  int? totalBazarCost;
+  int? totalUtilityCost;
   int? totalMeals;
-  double? costPerMeal;
-  double? utilityCostPerMember;
+  dynamic costPerMeal;
+  dynamic utilityCostPerMember;
   List<MemberDetails>? allMemberDetails;
 
   DashboardData({
@@ -28,19 +32,19 @@ class DashboardData {
     this.totalBazarCost,
     this.totalUtilityCost,
     this.totalMeals,
-    this.costPerMeal,
-    this.utilityCostPerMember,
+    required this.costPerMeal,
+    required this.utilityCostPerMember,
     this.allMemberDetails,
   });
 
   factory DashboardData.fromMap(Map<String, dynamic> map) {
     return DashboardData(
-      totalMembers: map['totalMembers'] as int?,
-      totalBazarCost: map['totalBazarCost'] as double?,
-      totalUtilityCost: map['totalUtilityCost'] as double?,
-      totalMeals: map['totalMeals'] as int?,
-      costPerMeal: map['costPerMeal'] as double?,
-      utilityCostPerMember: map['utilityCostPerMember'] as double?,
+      totalMembers: map['totalMembers'],
+      totalBazarCost: map['totalBazarCost'],
+      totalUtilityCost: map['totalUtilityCost'],
+      totalMeals: map['totalMeals'],
+      costPerMeal: map['costPerMeal'],
+      utilityCostPerMember: map['utilityCostPerMember'],
       allMemberDetails: (map['allMemberDetails'] as List<dynamic>?)
           ?.map((e) => MemberDetails.fromMap(e))
           .toList(),
@@ -55,9 +59,9 @@ class MemberDetails {
   String? memberTotalBazarCost;
   String? memberTotalUtilityCost;
   String? memberTotalMeal;
-  double? memberMealCost;
-  double? memberTotalDeposit;
-  double? memberAccount;
+  dynamic memberMealCost;
+  int? memberTotalDeposit;
+  dynamic memberAccount;
 
   MemberDetails({
     this.id,
@@ -66,22 +70,22 @@ class MemberDetails {
     this.memberTotalBazarCost,
     this.memberTotalUtilityCost,
     this.memberTotalMeal,
-    this.memberMealCost,
+    required this.memberMealCost,
     this.memberTotalDeposit,
-    this.memberAccount,
+    required this.memberAccount,
   });
 
   factory MemberDetails.fromMap(Map<String, dynamic> map) {
     return MemberDetails(
-      id: map['id']?.toString(),
-      memberName: map['memberName'] as String?,
-      gender: map['gender'] as String?,
-      memberTotalBazarCost: map['memberTotalBazarCost'] as String?,
-      memberTotalUtilityCost: map['memberTotalUtilityCost'] as String?,
-      memberTotalMeal: map['memberTotalMeal'] as String?,
-      memberMealCost: map['memberMealCost'] as double?,
-      memberTotalDeposit: map['memberTotalDeposit'] as double?,
-      memberAccount: map['memberAccount'] as double?,
+      id: map['id'],
+      memberName: map['memberName'],
+      gender: map['gender'],
+      memberTotalBazarCost: map['memberTotalBazarCost'],
+      memberTotalUtilityCost: map['memberTotalUtilityCost'],
+      memberTotalMeal: map['memberTotalMeal'],
+      memberMealCost: map['memberMealCost'],
+      memberTotalDeposit: map['memberTotalDeposit'],
+      memberAccount: map['memberAccount'],
     );
   }
 }

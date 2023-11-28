@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:meal_management/modules/dashboard/components/button_section.dart';
 import 'package:meal_management/modules/dashboard/components/my_drawer.dart';
-import 'package:meal_management/modules/dashboard/model/dashboard.dart';
+import 'package:meal_management/modules/dashboard/controller/dashboard_controller.dart';
+import 'package:meal_management/utils/extension.dart';
 
 class DashboardScreen extends StatefulWidget {
   const DashboardScreen({Key? key}) : super(key: key);
@@ -12,37 +14,13 @@ class DashboardScreen extends StatefulWidget {
 }
 
 class _DashboardScreenState extends State<DashboardScreen> {
-  String totalMember = "";
-  double bazarCost = 0;
-  double utilityCost = 0;
-  double totalCost = 0;
-  String totalMeal = "";
-  String costPerMeal = "";
-  // String totalRemainingBalance = 0;
-  // String callOnce = true;
   @override
   void initState() {
+    final controller = context.read(dashboardController.notifier);
+    Future(() {
+      controller.getDashboardData();
+    });
     super.initState();
-    getDashboardData();
-  }
-
-  DashboardInfo? dashboardInfo;
-  getDashboardData() async {
-    try {
-      dashboardInfo = await getDashboardInfo('2023-11-01', '2023-11-30', '2');
-      print('Total Members: ${dashboardInfo?.totalMembers ?? ""}');
-      print('Total Bazar Cost: ${dashboardInfo?.totalBazarCost}');
-      totalMember = dashboardInfo?.totalMembers ?? totalMember;
-      bazarCost = dashboardInfo?.totalBazarCost ?? bazarCost;
-      utilityCost = dashboardInfo?.totalUtilityCost ?? utilityCost;
-      totalCost = bazarCost * utilityCost;
-      costPerMeal = dashboardInfo?.costPerMeal ?? costPerMeal;
-      totalMeal = dashboardInfo?.totalMeals ?? totalMeal;
-      setState(() {});
-      // ... other properties and details
-    } catch (error) {
-      print('Error: $error');
-    }
   }
 
   @override
@@ -59,58 +37,64 @@ class _DashboardScreenState extends State<DashboardScreen> {
         ],
       ),
       drawer: const MyDrawer(),
-      body: ListView(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              children: [
-                _buildStatRow(
-                  title: 'Total Member',
-                  value: totalMember.toString(),
-                  icon: Icons.person,
+      body: Consumer(
+        builder: (_, WidgetRef ref, __) {
+          final state = ref.watch(dashboardController);
+          final data = state.dashboardResponse?.data;
+          return ListView(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  children: [
+                    _buildStatRow(
+                      title: 'Total Member',
+                      value: data?.totalMembers?.toString() ?? "0",
+                      icon: Icons.person,
+                    ),
+                    _buildStatRow(
+                      title: 'Utility Costing',
+                      value: data?.totalUtilityCost?.toString() ?? "0",
+                      icon: Icons.paid,
+                    ),
+                    _buildStatRow(
+                      title: 'Bazar Costing',
+                      value: data?.totalBazarCost?.toString() ?? "0",
+                      icon: Icons.shopping_cart,
+                    ),
+                    _buildStatRow(
+                      title: 'Total Meal',
+                      value: data?.totalMeals?.toString() ?? "0",
+                      icon: Icons.restaurant,
+                    ),
+                    _buildStatRow(
+                      title: 'Cost Per Meals',
+                      value: data?.costPerMeal?.toString() ?? "0",
+                      //    value: costPerMeal.toStringAsFixed(2),
+                      icon: Icons.paid,
+                    ),
+                    // _buildStatRow(
+                    //   title: 'Remaining Balance',
+                    //   value: totalRemainingBalance.toStringAsFixed(2),
+                    //   icon: Icons.balance,
+                    // ),
+                  ],
                 ),
-                _buildStatRow(
-                  title: 'Total Costing',
-                  value: totalCost.toStringAsFixed(2),
-                  icon: Icons.paid,
-                ),
-                _buildStatRow(
-                  title: 'Bazar Costing',
-                  value: bazarCost.toString(),
-                  icon: Icons.shopping_cart,
-                ),
-                _buildStatRow(
-                  title: 'Total Meal',
-                  value: totalMeal.toString(),
-                  icon: Icons.restaurant,
-                ),
-                _buildStatRow(
-                  title: 'Cost Per Meals',
-                  value: costPerMeal,
-                  //    value: costPerMeal.toStringAsFixed(2),
-                  icon: Icons.paid,
-                ),
-                // _buildStatRow(
-                //   title: 'Remaining Balance',
-                //   value: totalRemainingBalance.toStringAsFixed(2),
-                //   icon: Icons.balance,
-                // ),
-              ],
-            ),
-          ),
-          _buildCard('Personal Info', [
-            _buildInfoRow(
-                'My Deposit',
-                _buildHorizontalListView(
-                    ['MR Kamal', '100 tk'], ['MR Jamal', '100 tk'])),
-            _buildInfoRow(
-                'All Meals',
-                _buildHorizontalListView(
-                    ['MR Kamal', '100 tk'], ['MR Jamal', '100 tk'])),
-          ]),
-          _memberCostings(),
-        ],
+              ),
+              _buildCard('Personal Info', [
+                _buildInfoRow(
+                    'My Deposit',
+                    _buildHorizontalListView(
+                        ['MR Kamal', '100 tk'], ['MR Jamal', '100 tk'])),
+                _buildInfoRow(
+                    'All Meals',
+                    _buildHorizontalListView(
+                        ['MR Kamal', '100 tk'], ['MR Jamal', '100 tk'])),
+              ]),
+              _memberCostings(),
+            ],
+          );
+        },
       ),
       floatingActionButton: const ButtonSection(),
     );
