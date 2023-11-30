@@ -7,6 +7,7 @@ import 'package:meal_management/constant/constant_key.dart';
 import 'package:meal_management/global/widget/global_button.dart';
 import 'package:meal_management/modules/authentication/login_screen.dart';
 import 'package:meal_management/modules/dashboard/dashboard_screen.dart';
+import 'package:meal_management/modules/dashboard/model/user_response.dart';
 import 'package:meal_management/utils.dart';
 import 'package:meal_management/utils/app_routes.dart';
 import 'package:meal_management/utils/navigation.dart';
@@ -205,17 +206,15 @@ class _SignupScreenState extends State<SignupScreen>
       // Show loading indicator while signing up
 
       // Create the user with Firebase authentication
-      // final userCreateResponse = await UserService().createUser(UserModel(
+      // final userCreateResponse = await UserService().createUser(UserData(
       //     userName: userName,
       //     email: email,
       //     isAdmin: email == AppConstant.ADMIN_EMAIL.name,
       //     isManager: false,
       //     createdAt: DateTime.now()));
-      final result = await UserService().createUser(UserModel(
+      final result = await UserService().createUser(UserData(
         userName: userName,
         email: email,
-        isAdmin: false,
-        isManager: false,
       ));
       if (result != null) {
         EasyLoading.showSuccess("Success");

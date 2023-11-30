@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:meal_management/modules/dashboard/components/button_section.dart';
+import 'package:meal_management/modules/dashboard/components/member_details.dart';
 import 'package:meal_management/modules/dashboard/components/my_drawer.dart';
 import 'package:meal_management/modules/dashboard/controller/dashboard_controller.dart';
 import 'package:meal_management/utils/extension.dart';
@@ -27,7 +28,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Dashboard'),
+        title: const Text('Meal Management Dashboard'),
         actions: const [
           // IconButton(
           //     onPressed: () {
@@ -73,25 +74,15 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       //    value: costPerMeal.toStringAsFixed(2),
                       icon: Icons.paid,
                     ),
-                    // _buildStatRow(
-                    //   title: 'Remaining Balance',
-                    //   value: totalRemainingBalance.toStringAsFixed(2),
-                    //   icon: Icons.balance,
-                    // ),
+                    ...data!.allMemberDetails!
+                        .map((e) => MemberDetailsWidget(member: e))
+                        .toList(),
+                    SizedBox(
+                      height: 60,
+                    )
                   ],
                 ),
               ),
-              _buildCard('Personal Info', [
-                _buildInfoRow(
-                    'My Deposit',
-                    _buildHorizontalListView(
-                        ['MR Kamal', '100 tk'], ['MR Jamal', '100 tk'])),
-                _buildInfoRow(
-                    'All Meals',
-                    _buildHorizontalListView(
-                        ['MR Kamal', '100 tk'], ['MR Jamal', '100 tk'])),
-              ]),
-              _memberCostings(),
             ],
           );
         },
@@ -147,7 +138,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(8.0),
           child: Text(title),
         ),
         horizontalListView,

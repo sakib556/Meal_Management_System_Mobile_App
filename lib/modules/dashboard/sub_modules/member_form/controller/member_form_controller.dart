@@ -55,6 +55,7 @@ class MemberFormController extends StateNotifier<MemberFormState> {
         ViewUtil.requiredMessage();
       }
     } on Exception catch (e) {
+      print("error is : $e");
       state = state.copyWith(isButtonLoading: false);
     }
   }

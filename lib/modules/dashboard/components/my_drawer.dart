@@ -111,13 +111,13 @@ class _MyDrawerState extends State<MyDrawer> {
               ],
             ),
           ),
-          ListTile(
-            leading: const Icon(Icons.person),
-            title: const Text(' My Profile '),
-            onTap: () {
-              //   Navigator.pushNamed(context, ProfileScreen.routeName);
-            },
-          ),
+          // ListTile(
+          //   leading: const Icon(Icons.person),
+          //   title: const Text(' My Profile '),
+          //   onTap: () {
+          //     //   Navigator.pushNamed(context, ProfileScreen.routeName);
+          //   },
+          // ),
           ListTile(
             leading: const Icon(Icons.person),
             title: const Text('Add Member'),
@@ -142,13 +142,13 @@ class _MyDrawerState extends State<MyDrawer> {
                   context: context, child: const CostForm());
             },
           ),
-          ListTile(
-            leading: const Icon(Icons.edit),
-            title: const Text(' Edit Profile '),
-            onTap: () {
-              Navigator.pop(context);
-            },
-          ),
+          // ListTile(
+          //   leading: const Icon(Icons.edit),
+          //   title: const Text(' Edit Profile '),
+          //   onTap: () {
+          //     Navigator.pop(context);
+          //   },
+          // ),
           isLogoutLoading
               ? const CircularProgressIndicator()
               : ListTile(

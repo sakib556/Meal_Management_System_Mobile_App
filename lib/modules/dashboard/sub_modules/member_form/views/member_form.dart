@@ -2,13 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:meal_management/constant/constant_list.dart';
 import 'package:meal_management/global/model/member.dart';
-import 'package:meal_management/global/widget/date_time_pickers.dart';
 import 'package:meal_management/global/widget/form_with_button.dart';
 import 'package:meal_management/global/widget/global_button.dart';
 import 'package:meal_management/global/widget/global_dropdown.dart';
 import 'package:meal_management/global/widget/global_space.dart';
 import 'package:meal_management/global/widget/text_fields.dart';
-import 'package:meal_management/global/widget/titles.dart';
 import 'package:meal_management/modules/dashboard/sub_modules/member_form/controller/member_form_controller.dart';
 
 const userId = 2;
@@ -31,6 +29,7 @@ class MemberForm extends StatelessWidget {
                     text: "Add Member",
                     loading: state.isButtonLoading,
                     onTap: () {
+                      controller.userId = 2;
                       controller.submitForm();
                     })
                 : GlobalButton(
