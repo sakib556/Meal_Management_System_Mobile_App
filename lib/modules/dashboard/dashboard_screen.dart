@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:meal_management/global/widget/error_button.dart';
+import 'package:meal_management/global/widget/global_indicator.dart';
+import 'package:meal_management/global/widget/global_text.dart';
 import 'package:meal_management/modules/dashboard/components/button_section.dart';
 import 'package:meal_management/modules/dashboard/components/member_details.dart';
 import 'package:meal_management/modules/dashboard/components/my_drawer.dart';
@@ -19,7 +22,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
   void initState() {
     final controller = context.read(dashboardController.notifier);
     Future(() {
-      controller.getDashboardData();
+      controller.getUserData();
     });
     super.initState();
   }
@@ -40,48 +43,80 @@ class _DashboardScreenState extends State<DashboardScreen> {
       drawer: const MyDrawer(),
       body: Consumer(
         builder: (_, WidgetRef ref, __) {
+          final controller = context.read(dashboardController.notifier);
           final state = ref.watch(dashboardController);
           final data = state.dashboardResponse?.data;
           return ListView(
             children: [
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  children: [
-                    _buildStatRow(
-                      title: 'Total Member',
-                      value: data?.totalMembers?.toString() ?? "0",
-                      icon: Icons.person,
-                    ),
-                    _buildStatRow(
-                      title: 'Utility Costing',
-                      value: data?.totalUtilityCost?.toString() ?? "0",
-                      icon: Icons.paid,
-                    ),
-                    _buildStatRow(
-                      title: 'Bazar Costing',
-                      value: data?.totalBazarCost?.toString() ?? "0",
-                      icon: Icons.shopping_cart,
-                    ),
-                    _buildStatRow(
-                      title: 'Total Meal',
-                      value: data?.totalMeals?.toString() ?? "0",
-                      icon: Icons.restaurant,
-                    ),
-                    _buildStatRow(
-                      title: 'Cost Per Meals',
-                      value: data?.costPerMeal?.toString() ?? "0",
-                      //    value: costPerMeal.toStringAsFixed(2),
-                      icon: Icons.paid,
-                    ),
-                    ...data!.allMemberDetails!
-                        .map((e) => MemberDetailsWidget(member: e))
-                        .toList(),
-                    SizedBox(
-                      height: 60,
-                    )
-                  ],
-                ),
+                child: state.isError
+                    ? ErrorButton(onTap: () {
+                        Future(() {
+                          controller.getUserData();
+                        });
+                      })
+                    : state.isUserDataLoading
+                        ? const Padding(
+                            padding: EdgeInsets.only(top: 100),
+                            child: GlobalIndicator(),
+                          )
+                        : Stack(
+                            children: [
+                              state.isLoading
+                                  ? const Positioned(
+                                      right: 5,
+                                      top: 5,
+                                      child: GlobalIndicator())
+                                  : const SizedBox.shrink(),
+                              Column(
+                                children: [
+                                  _buildStatRow(
+                                    title: 'Total Member',
+                                    value:
+                                        data?.totalMembers?.toString() ?? "0",
+                                    icon: Icons.person,
+                                  ),
+                                  _buildStatRow(
+                                    title: 'Utility Costing',
+                                    value: data?.totalUtilityCost?.toString() ??
+                                        "0",
+                                    icon: Icons.paid,
+                                  ),
+                                  _buildStatRow(
+                                    title: 'Bazar Costing',
+                                    value:
+                                        data?.totalBazarCost?.toString() ?? "0",
+                                    icon: Icons.shopping_cart,
+                                  ),
+                                  _buildStatRow(
+                                    title: 'Total Meal',
+                                    value: data?.totalMeals?.toString() ?? "0",
+                                    icon: Icons.restaurant,
+                                  ),
+                                  _buildStatRow(
+                                    title: 'Cost Per Meals',
+                                    value: data?.costPerMeal?.toString() ?? "0",
+                                    //    value: costPerMeal.toStringAsFixed(2),
+                                    icon: Icons.paid,
+                                  ),
+                                  data == null
+                                      ? const GlobalText("Wait......")
+                                      : Column(
+                                          children: [
+                                            ...data.allMemberDetails!
+                                                .map((e) => MemberDetailsWidget(
+                                                    member: e))
+                                                .toList(),
+                                          ],
+                                        ),
+                                  const SizedBox(
+                                    height: 60,
+                                  )
+                                ],
+                              ),
+                            ],
+                          ),
               ),
             ],
           );
@@ -109,195 +144,4 @@ class _DashboardScreenState extends State<DashboardScreen> {
       ),
     );
   }
-
-  Widget _buildCard(String title, List<Widget> children) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Card(
-        elevation: 5,
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const Align(
-                alignment: Alignment.center,
-                child: Text('Personal Info'),
-              ),
-              ...children,
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildInfoRow(String title, Widget horizontalListView) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text(title),
-        ),
-        horizontalListView,
-      ],
-    );
-  }
-
-  Widget _buildHorizontalListView(List<String> data1, List<String> data2) {
-    return SizedBox(
-      height: 100,
-      child: ListView(
-        shrinkWrap: true,
-        scrollDirection: Axis.horizontal,
-        children: [
-          for (int i = 0; i < data1.length; i++)
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(20),
-                child: Container(
-                  height: 80,
-                  width: 80,
-                  alignment: Alignment.center,
-                  color: Colors.green,
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(data1[i]),
-                      Text(data2[i]),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-        ],
-      ),
-    );
-  }
-
-  _memberCostings() {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Card(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Padding(
-              padding: EdgeInsets.all(10.0),
-              child: Align(
-                alignment: Alignment.center,
-                child: Text(
-                  'Total Member : 2',
-                  style: TextStyle(fontSize: 16),
-                ),
-              ),
-            ),
-            const Divider(
-              height: 5,
-            ),
-            ListView(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: ClipRRect(
-                        borderRadius: BorderRadius.circular(20),
-                        child: Container(
-                            height: 80,
-                            width: 80,
-                            alignment: Alignment.center,
-                            color: Colors.green,
-                            child: const Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Text("MR Kamal"),
-                                Text("100 tk"),
-                              ],
-                            ))),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: ClipRRect(
-                        borderRadius: BorderRadius.circular(20),
-                        child: Container(
-                            height: 80,
-                            width: 80,
-                            alignment: Alignment.center,
-                            color: Colors.green,
-                            child: const Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Text("MR Jamal"),
-                                Text("100 tk"),
-                              ],
-                            ))),
-                  ),
-                ]),
-            const SizedBox(
-              height: 80,
-            )
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget showMemberAccountValue(MemberAccountModel m) {
-    return Padding(
-      padding: const EdgeInsets.all(20.0),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                m.memberName,
-                style: const TextStyle(fontWeight: FontWeight.bold),
-              ),
-              Text(
-                "Total cost : ${m.cost.toString()}",
-                style: const TextStyle(fontSize: 14),
-              ),
-            ],
-          ),
-          const SizedBox(
-            height: 10,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                "Deposite : ${m.deposite.toString()}",
-                style: const TextStyle(fontSize: 14),
-              ),
-              Text(
-                "Balance : ${m.balance}",
-                style: const TextStyle(fontSize: 14),
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-  }
-
-  Future<void> getTotalCosting() async {}
-
-  void getTotalDeposit() {}
-
-  void getTotalNoOfMeals() {}
-}
-
-class MemberAccountModel {
-  String memberName;
-  String deposite;
-  String cost;
-  String balance;
-
-  MemberAccountModel(this.memberName, this.deposite, this.cost, this.balance);
 }

@@ -9,6 +9,7 @@ import 'package:meal_management/modules/dashboard/model/user_response.dart';
 import 'package:meal_management/modules/dashboard/sub_modules/cost_form/views/cost_form.dart';
 import 'package:meal_management/utils/enum.dart';
 import 'package:meal_management/utils/extension.dart';
+import 'package:meal_management/utils/view_util.dart';
 
 final dashboardController =
     StateNotifierProvider.autoDispose<DashboardController, DashboardState>(
@@ -32,7 +33,13 @@ class DashboardController extends StateNotifier<DashboardState> {
   final ApiClient _apiClient = ApiClient();
 
   Future<void> getDashboardData() async {
+    final String? userId = state.userData?.id;
     state = state.copyWith(isLoading: true);
+    if (userId == null) {
+      ViewUtil.globalSnackbar("Your userId not found.");
+      state = state.copyWith(isLoading: true);
+      return;
+    }
     final String url =
         "/dashboard.php?action=getDashboardInfo&startDate=$startDate&endDate=$endDate&userId=$userId";
     'url is: $url'.log();
@@ -83,6 +90,9 @@ class DashboardController extends StateNotifier<DashboardState> {
         }
         final UserData userData = UserResponse.fromMap(dataMap).data!;
         state = state.copyWith(userData: userData);
+        Future(() {
+          getDashboardData();
+        });
         print("data is ${response.data}");
       },
     )

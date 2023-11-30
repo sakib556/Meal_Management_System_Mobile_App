@@ -15,7 +15,7 @@ class UserResponse {
 }
 
 class UserData {
-  int? id;
+  String? id;
   String? userName;
   String? email;
   DateTime? createdAt;
@@ -25,7 +25,7 @@ class UserData {
 
   factory UserData.fromMap(Map<String, dynamic>? map) {
     return UserData(
-      id: map?['id'] as int?,
+      id: map?['id'] as String?,
       userName: map?['userName'] as String?,
       email: map?['email'] as String?,
       createdAt: map?['createdAt'] != null

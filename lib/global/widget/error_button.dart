@@ -26,9 +26,9 @@ class GlobalErrorButton extends StatelessWidget {
           IconButton(
             onPressed: () {
               // if (!AuthRepository().tokenIsExpired()) {
-              //   onTap();
+              onTap();
               // } else {
-              EasyLoading.showError("Authentication token expired");
+              //  EasyLoading.showError("Authentication token expired");
               //   authenticationBloc.add(TokenExpired());
               // }
             },

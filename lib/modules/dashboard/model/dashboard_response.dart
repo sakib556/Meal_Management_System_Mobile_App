@@ -11,7 +11,7 @@ class DashboardResponse {
 
   factory DashboardResponse.fromMap(Map<String, dynamic> map) {
     return DashboardResponse(
-      status: map['status'] as int?,
+      status: map['status'],
       data: DashboardData.fromMap(map['data']),
       message: map['message'] as String?,
     );
@@ -19,10 +19,10 @@ class DashboardResponse {
 }
 
 class DashboardData {
-  int? totalMembers;
-  int? totalBazarCost;
-  int? totalUtilityCost;
-  int? totalMeals;
+  String? totalMembers;
+  String? totalBazarCost;
+  String? totalUtilityCost;
+  String? totalMeals;
   dynamic costPerMeal;
   dynamic utilityCostPerMember;
   List<MemberDetails>? allMemberDetails;
