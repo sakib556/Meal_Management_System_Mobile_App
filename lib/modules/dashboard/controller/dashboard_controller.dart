@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:meal_management/data_provider/api_client.dart';
 import 'package:meal_management/modules/dashboard/controller/dashboard_state.dart';
 import 'package:meal_management/modules/dashboard/model/dashboard_response.dart';
+import 'package:meal_management/modules/dashboard/model/member_response.dart';
 import 'package:meal_management/modules/dashboard/model/user_response.dart';
 import 'package:meal_management/modules/dashboard/sub_modules/cost_form/views/cost_form.dart';
 import 'package:meal_management/utils/enum.dart';
@@ -20,9 +21,11 @@ class DashboardController extends StateNotifier<DashboardState> {
       : super(const DashboardState(
             isLoading: true,
             isUserDataLoading: true,
+            isMembersLoading: true,
             dashboardResponse: null,
             userData: null,
-            isError: false));
+            isError: false,
+            members: []));
 
   DateTime startDate = DateTime(2023, 11, 01);
   DateTime endDate = DateTime(2023, 12, 31);
@@ -61,6 +64,41 @@ class DashboardController extends StateNotifier<DashboardState> {
         final DashboardResponse dashboardResponse =
             DashboardResponse.fromMap(dataMap);
         state = state.copyWith(dashboardResponse: dashboardResponse);
+        print("data is 3${response.data}");
+      },
+    )
+        .catchError((e) {
+      print("data error is 44$e");
+      'Error is: $e'.log();
+    });
+    state = state.copyWith(isLoading: false);
+  }
+
+  Future<void> getAllMembers() async {
+    final String? userId = state.userData?.id;
+    state = state.copyWith(isMembersLoading: true);
+    if (userId == null) {
+      ViewUtil.globalSnackbar("Your userId not found.");
+      state = state.copyWith(isMembersLoading: true);
+      return;
+    }
+    final String url =
+        "/member.php?action=getAllMembersByUserId&userId=$userId";
+    'url is: $url'.log();
+
+    print("data is start");
+    await _apiClient
+        .request(
+      url: url,
+      method: Method.GET,
+      onSuccessFunction: (response) {
+        print("data is ${response.data}");
+        final Map<String, dynamic> dataMap = json.decode(response.data);
+        if (kDebugMode) {
+          print("data is 2222 $dataMap");
+        }
+        final MemberResponse memberResponse = MemberResponse.fromJson(dataMap);
+        state = state.copyWith(members: memberResponse.data.members);
         print("data is 3${response.data}");
       },
     )
