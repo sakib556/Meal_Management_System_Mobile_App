@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:meal_management/constant/constant_list.dart';
 import 'package:meal_management/global/model/cost.dart';
 import 'package:meal_management/global/widget/date_time_pickers.dart';
+import 'package:meal_management/global/widget/dropdowns/member_list_dropdown.dart';
 import 'package:meal_management/global/widget/form_with_button.dart';
 import 'package:meal_management/global/widget/global_button.dart';
 import 'package:meal_management/global/widget/global_dropdown.dart';
@@ -51,14 +52,11 @@ class CostForm extends StatelessWidget {
         key: controller.formKey,
         child: Column(
           children: [
-            GlobalDropDown(
-              title: "Member",
-              onChanged: (data) {
-                controller.memberId = data;
-              },
-              items: memberList,
-              selectedId: controller.memberId,
-            ),
+            MemberListDropdown(
+                selectedId: cost?.memberId,
+                onChanged: (selectedId) {
+                  controller.memberId = selectedId;
+                }),
             const VerticalSpace(),
             BorderedTextField(
                 label: "Amount",

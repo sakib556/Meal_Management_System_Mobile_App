@@ -40,7 +40,7 @@ extension KColorExtention on KColor {
   Color get color {
     switch (this) {
       case KColor.primary:
-        return Color.fromARGB(255, 4, 6, 130);
+        return Color.fromARGB(255, 18, 22, 214);
       // return const Color(0xff190482);
       //  return const Color(0xff645cbb);
       case KColor.secondary:

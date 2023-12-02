@@ -8,6 +8,7 @@ import 'package:meal_management/modules/dashboard/model/dashboard_response.dart'
 import 'package:meal_management/modules/dashboard/model/member_response.dart';
 import 'package:meal_management/modules/dashboard/model/user_response.dart';
 import 'package:meal_management/modules/dashboard/sub_modules/cost_form/views/cost_form.dart';
+import 'package:meal_management/utils/date_time_util.dart';
 import 'package:meal_management/utils/enum.dart';
 import 'package:meal_management/utils/extension.dart';
 import 'package:meal_management/utils/view_util.dart';
@@ -25,13 +26,11 @@ class DashboardController extends StateNotifier<DashboardState> {
             dashboardResponse: null,
             userData: null,
             isError: false,
-            members: []));
+            isMembersError: false,
+            members: null));
 
-  DateTime startDate = DateTime(2023, 11, 01);
-  DateTime endDate = DateTime(2023, 12, 31);
-  // DateTime startDate = DateTime(DateTime.now().year, DateTime.now().month, 1);
-  // DateTime endDate = DateTime(DateTime.now().year, DateTime.now().month + 1, 1)
-  //     .subtract(const Duration(days: 1));
+  DateTime startDate = DateTimeUtil.getDefaultRange().startTime;
+  DateTime endDate = DateTimeUtil.getDefaultRange().endTime;
 
   final ApiClient _apiClient = ApiClient();
 
@@ -40,7 +39,7 @@ class DashboardController extends StateNotifier<DashboardState> {
     state = state.copyWith(isLoading: true);
     if (userId == null) {
       ViewUtil.globalSnackbar("Your userId not found.");
-      state = state.copyWith(isLoading: true);
+      state = state.copyWith(isError: true, isLoading: false);
       return;
     }
     final String url =
@@ -70,8 +69,13 @@ class DashboardController extends StateNotifier<DashboardState> {
         .catchError((e) {
       print("data error is 44$e");
       'Error is: $e'.log();
+      state = state.copyWith(isError: true);
     });
     state = state.copyWith(isLoading: false);
+  }
+
+  void reload() {
+    getDashboardData();
   }
 
   Future<void> getAllMembers() async {
@@ -79,7 +83,7 @@ class DashboardController extends StateNotifier<DashboardState> {
     state = state.copyWith(isMembersLoading: true);
     if (userId == null) {
       ViewUtil.globalSnackbar("Your userId not found.");
-      state = state.copyWith(isMembersLoading: true);
+      state = state.copyWith(isMembersLoading: false);
       return;
     }
     final String url =
@@ -98,15 +102,16 @@ class DashboardController extends StateNotifier<DashboardState> {
           print("data is 2222 $dataMap");
         }
         final MemberResponse memberResponse = MemberResponse.fromJson(dataMap);
-        state = state.copyWith(members: memberResponse.data.members);
+        state = state.copyWith(
+            members: memberResponse.data.members, isMembersLoading: false);
         print("data is 3${response.data}");
       },
     )
         .catchError((e) {
       print("data error is 44$e");
       'Error is: $e'.log();
+      state = state.copyWith(isMembersLoading: false, isError: true);
     });
-    state = state.copyWith(isLoading: false);
   }
 
   Future<void> getUserData() async {
