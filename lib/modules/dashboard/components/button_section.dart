@@ -63,19 +63,6 @@ class ButtonSection extends StatelessWidget {
           label: 'Add Member',
           labelStyle: const TextStyle(color: Colors.grey),
         ),
-        SpeedDialChild(
-          backgroundColor: Colors.white,
-          labelBackgroundColor: Colors.white,
-          onTap: () {
-            //Navigator.pushNamed(context, MemberList.routeName);
-          },
-          child: const Icon(
-            Icons.calendar_month,
-            color: Colors.grey,
-          ),
-          label: 'Other Month Details',
-          labelStyle: const TextStyle(color: Colors.grey),
-        ),
       ],
     );
   }

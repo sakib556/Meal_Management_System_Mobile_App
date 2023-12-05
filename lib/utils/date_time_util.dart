@@ -21,6 +21,10 @@ class DateTimeUtil {
     return picked;
   }
 
+  static String formatDate(DateTime dateTime) {
+    return DateFormat('yyyy-MM-dd').format(dateTime);
+  }
+
   static String rangeMY(DateTime start, DateTime? end) {
     final startMonthYear = '${getMonthAbbreviation(start.month)} ${start.year}';
     final endMonthYear = end != null

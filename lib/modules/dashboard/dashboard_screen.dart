@@ -8,7 +8,10 @@ import 'package:meal_management/modules/dashboard/components/button_section.dart
 import 'package:meal_management/modules/dashboard/components/member_details.dart';
 import 'package:meal_management/modules/dashboard/components/my_drawer.dart';
 import 'package:meal_management/modules/dashboard/controller/dashboard_controller.dart';
+import 'package:meal_management/modules/dashboard/sub_modules/member_details/model/member_details_response.dart';
+import 'package:meal_management/utils/app_routes.dart';
 import 'package:meal_management/utils/extension.dart';
+import 'package:meal_management/utils/navigation.dart';
 import 'package:meal_management/utils/styles/k_colors.dart';
 
 class DashboardScreen extends StatefulWidget {
@@ -127,9 +130,27 @@ class _DashboardScreenState extends State<DashboardScreen> {
                                         : Column(
                                             children: [
                                               ...data.allMemberDetails!
-                                                  .map((e) =>
-                                                      MemberDetailsWidget(
-                                                          member: e))
+                                                  .map((e) => InkWell(
+                                                        onTap: () {
+                                                          Navigation.push(
+                                                              context,
+                                                              appRoutes: AppRoutes
+                                                                  .memberDetails,
+                                                              arguments:
+                                                                  MemberParameter(
+                                                                member: e,
+                                                                startDate:
+                                                                    controller
+                                                                        .startDate,
+                                                                endDate:
+                                                                    controller
+                                                                        .endDate,
+                                                              ));
+                                                        },
+                                                        child:
+                                                            MemberDetailsWidget(
+                                                                member: e),
+                                                      ))
                                                   .toList(),
                                             ],
                                           ),
