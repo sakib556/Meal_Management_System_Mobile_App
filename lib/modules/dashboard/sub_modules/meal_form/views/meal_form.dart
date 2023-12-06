@@ -11,10 +11,6 @@ import 'package:meal_management/global/widget/text_fields.dart';
 import 'package:meal_management/global/widget/titles.dart';
 import 'package:meal_management/modules/dashboard/sub_modules/meal_form/controller/meal_form_controller.dart';
 
-const userId = 2;
-
-final memberList = [NameId("Sakib", 1), NameId("Masud", 2), NameId("Ajad", 3)];
-
 class MealForm extends StatelessWidget {
   const MealForm({Key? key, this.meal}) : super(key: key);
   final Meal? meal;
@@ -37,7 +33,9 @@ class MealForm extends StatelessWidget {
                     text: "Update Meal",
                     loading: state.isButtonLoading,
                     onTap: () {
-                      controller.updateForm();
+                      Future(() {
+                        controller.updateForm();
+                      });
                     }),
             child: _form(context));
       },
@@ -51,14 +49,6 @@ class MealForm extends StatelessWidget {
         key: controller.formKey,
         child: Column(
           children: [
-            // GlobalDropDown(
-            //   title: "Member",
-            //   onChanged: (data) {
-            //     controller.memberId = data;
-            //   },
-            //   items: memberList,
-            //   selectedId: controller.memberId,
-            // ),
             MemberListDropdown(
                 selectedId: meal?.memberId,
                 onChanged: (selectedId) {

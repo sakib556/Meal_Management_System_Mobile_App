@@ -73,8 +73,8 @@ class _LoginScreenState extends State<LoginScreen>
                     ),
                   ),
                   const SizedBox(height: 30),
-                  GlobalText(
-                    'Member Login',
+                  const GlobalText(
+                    'User Login',
                     color: Colors.white,
                     fontSize: 28,
                     fontWeight: FontWeight.bold,

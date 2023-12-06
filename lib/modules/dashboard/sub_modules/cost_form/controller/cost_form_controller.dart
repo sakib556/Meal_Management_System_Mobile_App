@@ -40,28 +40,33 @@ class CostFormController extends StateNotifier<CostFormState> {
             costType: costType!,
             details: details!,
             costDate: costDate);
-        final String url = "${AppUrl.base.url}/cost.php?action=createCost";
+        const String url = "/cost.php?action=createCost";
         'url is: $url'.log();
+        print(cost.toJson());
         await _apiClient.request(
           url: url,
           method: Method.POST,
           params: cost.toJson(),
           onSuccessFunction: (response) {
-            print("response is $response");
+            print("response is ${response.toString()}");
             Future(() {
               Navigation.key.currentState!.context
                   .read(dashboardController.notifier)
                   .getDashboardData();
+              print("response get 2");
             });
             Navigation.key.currentState!.pop();
             ViewUtil.globalSnackbar("Cost created !");
             state = state.copyWith(isButtonLoading: false);
           },
         );
+        state = state.copyWith(isButtonLoading: false);
       } else {
         ViewUtil.requiredMessage();
+        state = state.copyWith(isButtonLoading: false);
       }
     } on Exception catch (e) {
+      print("error is : $e");
       state = state.copyWith(isButtonLoading: false);
     }
   }

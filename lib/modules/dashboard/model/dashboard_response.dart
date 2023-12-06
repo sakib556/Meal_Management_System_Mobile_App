@@ -22,7 +22,7 @@ class DashboardData {
   String? totalMembers;
   String? totalBazarCost;
   String? totalUtilityCost;
-  String? totalMeals;
+  dynamic totalMeals;
   dynamic costPerMeal;
   dynamic utilityCostPerMember;
   List<MemberDetails>? allMemberDetails;

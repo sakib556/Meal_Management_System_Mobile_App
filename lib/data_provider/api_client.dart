@@ -167,11 +167,14 @@ class ApiClient {
       }
       // Handle response code from api.
       if (method == Method.POST) {
+        print("post data ${params.toString()}");
         response = await _dio.post(
           url,
           // queryParameters: params,
           data: data ?? params,
         );
+        print("post response ${response.toString()}.....");
+        print("post end");
       } else if (method == Method.DELETE) {
         response = await _dio.delete(url);
       } else if (method == Method.PATCH) {
@@ -302,6 +305,9 @@ class ApiClient {
   }) async {
     if (response.statusCode == 200 || response.statusCode == 201) {
       final Map data = json.decode(response.toString());
+      print(data.toString());
+      print("status 200 or 201");
+      print("status 200 or 201");
       final verifycode = data['status'];
       final String message = data['message'] ?? "Something went wrong";
       int code = int.tryParse(verifycode.toString()) ?? 0;

@@ -12,10 +12,6 @@ import 'package:meal_management/global/widget/text_fields.dart';
 import 'package:meal_management/global/widget/titles.dart';
 import 'package:meal_management/modules/dashboard/sub_modules/cost_form/controller/cost_form_controller.dart';
 
-// const userId = 2;
-
-final memberList = [NameId("Sakib", 1), NameId("Masud", 2), NameId("Ajad", 3)];
-
 class CostForm extends StatelessWidget {
   const CostForm({Key? key, this.cost}) : super(key: key);
   final Cost? cost;
@@ -32,7 +28,9 @@ class CostForm extends StatelessWidget {
                     text: "Add Cost",
                     loading: state.isButtonLoading,
                     onTap: () {
-                      controller.submitForm();
+                      Future(() {
+                        controller.submitForm();
+                      });
                     })
                 : GlobalButton(
                     text: "Update Cost",
@@ -64,7 +62,14 @@ class CostForm extends StatelessWidget {
                 controller: TextEditingController(
                     text: controller.amount?.toString() ?? ""),
                 onChanged: (data) {
-                  controller.amount = double.parse(data ?? "");
+                  try {
+                    // Attempt to parse the string to a double
+                    controller.amount = double.parse(data ?? "");
+                  } catch (e) {
+                    // Handle the case where parsing fails (e.g., invalid double)
+                    print("Invalid amount format");
+                    controller.amount = null; // or set to a default value
+                  }
                 }),
             const VerticalSpace(),
             GlobalConstantDropDown(

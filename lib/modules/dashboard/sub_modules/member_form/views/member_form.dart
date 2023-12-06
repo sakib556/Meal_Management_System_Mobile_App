@@ -7,11 +7,8 @@ import 'package:meal_management/global/widget/global_button.dart';
 import 'package:meal_management/global/widget/global_dropdown.dart';
 import 'package:meal_management/global/widget/global_space.dart';
 import 'package:meal_management/global/widget/text_fields.dart';
+import 'package:meal_management/modules/dashboard/controller/dashboard_controller.dart';
 import 'package:meal_management/modules/dashboard/sub_modules/member_form/controller/member_form_controller.dart';
-
-const userId = 2;
-
-final memberList = [NameId("Sakib", 1), NameId("Masud", 2), NameId("Ajad", 3)];
 
 class MemberForm extends StatelessWidget {
   const MemberForm({Key? key, this.member}) : super(key: key);
@@ -22,6 +19,7 @@ class MemberForm extends StatelessWidget {
     return Consumer(
       builder: (context, ref, child) {
         final controller = ref.read(memberFormController.notifier);
+        final dashboardState = ref.watch(dashboardController);
         final state = ref.watch(memberFormController);
         return GlobalFormWithButton(
             button: member == null
@@ -29,7 +27,8 @@ class MemberForm extends StatelessWidget {
                     text: "Add Member",
                     loading: state.isButtonLoading,
                     onTap: () {
-                      controller.userId = 2;
+                      controller.userId =
+                          int.parse(dashboardState.userData!.id!);
                       controller.submitForm();
                     })
                 : GlobalButton(

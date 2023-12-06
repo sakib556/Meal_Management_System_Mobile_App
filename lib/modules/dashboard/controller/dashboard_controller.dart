@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:meal_management/data_provider/api_client.dart';
 import 'package:meal_management/modules/dashboard/controller/dashboard_state.dart';
@@ -52,14 +53,12 @@ class DashboardController extends StateNotifier<DashboardState> {
       url: url,
       method: Method.GET,
       onSuccessFunction: (response) {
-        print("data is ${response.data}");
+        print("data is ${response.data.toString()}");
         final Map<String, dynamic> dataMap = json.decode(response.data);
         if (kDebugMode) {
           print("data is 2222 $dataMap");
         }
-        if (kDebugMode) {
-          print("data is 2 $dataMap");
-        }
+
         final DashboardResponse dashboardResponse =
             DashboardResponse.fromMap(dataMap);
         state = state.copyWith(dashboardResponse: dashboardResponse);
@@ -69,6 +68,7 @@ class DashboardController extends StateNotifier<DashboardState> {
         .catchError((e) {
       print("data error is 44$e");
       'Error is: $e'.log();
+      EasyLoading.showError("Something went wrong !");
       state = state.copyWith(isError: true);
     });
     state = state.copyWith(isLoading: false);

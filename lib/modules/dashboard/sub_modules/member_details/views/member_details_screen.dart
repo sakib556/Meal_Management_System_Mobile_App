@@ -38,7 +38,7 @@ class _MemberDetailsScreenState extends State<MemberDetailsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Member Details'),
+        title: Text('${widget.memberParameter.member.memberName} Details'),
       ),
       body: Consumer(
         builder: (_, WidgetRef ref, __) {

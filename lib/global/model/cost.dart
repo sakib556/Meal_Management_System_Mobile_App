@@ -21,7 +21,7 @@ class Cost {
     return Cost(
       id: json['id'],
       memberId: json['memberId'],
-      amount: json['amount'].toDouble(),
+      amount: json['amount'],
       costType: json['costType'],
       details: json['details'],
       costDate: DateTime.parse(json['costDate']),
