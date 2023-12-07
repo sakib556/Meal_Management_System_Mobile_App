@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
@@ -43,7 +45,7 @@ class _LandingScreenState extends State<LandingScreen> {
         future: loginCheck,
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return const WaitingWidget();
+            return const WaitingScreen();
           } else if (snapshot.hasData) {
             if (snapshot.data != null && snapshot.data!.value != null) {
               //  return const WaitingWidget();
@@ -60,45 +62,58 @@ class _LandingScreenState extends State<LandingScreen> {
   }
 }
 
-class WaitingWidget extends StatelessWidget {
-  const WaitingWidget({super.key});
-
+class WaitingScreen extends StatelessWidget {
+  const WaitingScreen({super.key, this.isSplash = false});
+  final bool isSplash;
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          CircularProgressIndicator(
-            valueColor: AlwaysStoppedAnimation<Color>(
-              Colors.blue.shade300,
+    if (isSplash) {
+      Timer(
+        const Duration(seconds: 2), // You can adjust the delay as needed
+        () {
+          Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(builder: (context) => const LandingScreen()),
+          );
+        },
+      );
+    }
+    return Scaffold(
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            CircularProgressIndicator(
+              valueColor: AlwaysStoppedAnimation<Color>(
+                Colors.blue.shade300,
+              ),
             ),
-          ),
-          const SizedBox(height: 16),
-          const Text(
-            'Meal Management System',
-            style: TextStyle(
+            const SizedBox(height: 16),
+            const Text(
+              'Meal Management System',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(height: 8),
+            const Text(
+              'Savoring moments, managing meals.',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 16,
+              ),
+              textAlign: TextAlign.center,
+            ),
+            const SizedBox(height: 16),
+            const Icon(
+              Icons.restaurant,
               color: Colors.white,
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          const SizedBox(height: 8),
-          const Text(
-            'Savoring moments, managing meals.',
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 16,
-            ),
-            textAlign: TextAlign.center,
-          ),
-          const SizedBox(height: 16),
-          const Icon(
-            Icons.restaurant,
-            color: Colors.white,
-            size: 80,
-          ), // Use the restaurant icon for a meal management theme
-        ],
+              size: 80,
+            ), // Use the restaurant icon for a meal management theme
+          ],
+        ),
       ),
     );
   }

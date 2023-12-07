@@ -60,7 +60,9 @@ class MyApp extends StatelessWidget {
             ),
       ),
       builder: EasyLoading.init(),
-      home: const LandingScreen(),
+      home: const WaitingScreen(
+        isSplash: true,
+      ),
     );
   }
 }
