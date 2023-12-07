@@ -19,9 +19,9 @@ class DashboardResponse {
 }
 
 class DashboardData {
-  String? totalMembers;
-  String? totalBazarCost;
-  String? totalUtilityCost;
+  dynamic totalMembers;
+  dynamic totalBazarCost;
+  dynamic totalUtilityCost;
   dynamic totalMeals;
   dynamic costPerMeal;
   dynamic utilityCostPerMember;
@@ -56,11 +56,11 @@ class MemberDetails {
   String? id;
   String? memberName;
   String? gender;
-  String? memberTotalBazarCost;
-  String? memberTotalUtilityCost;
-  String? memberTotalMeal;
+  dynamic memberTotalBazarCost;
+  dynamic memberTotalUtilityCost;
+  dynamic memberTotalMeal;
   dynamic memberMealCost;
-  int? memberTotalDeposit;
+  dynamic memberTotalDeposit;
   dynamic memberAccount;
 
   MemberDetails({

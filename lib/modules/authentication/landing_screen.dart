@@ -69,7 +69,7 @@ class WaitingScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     if (isSplash) {
       Timer(
-        const Duration(seconds: 2), // You can adjust the delay as needed
+        const Duration(seconds: 4), // You can adjust the delay as needed
         () {
           Navigator.pushReplacement(
             context,
@@ -79,6 +79,7 @@ class WaitingScreen extends StatelessWidget {
       );
     }
     return Scaffold(
+      backgroundColor: KColor.primary.color,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
